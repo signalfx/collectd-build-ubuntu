@@ -1,0 +1,25 @@
+#! /bin/sh /usr/share/dpatch/dpatch-run
+## fixlibperl.dpatch by  <ubuntu@>
+##
+## All lines beginning with `## DP:' are a description of the patch.
+## DP: makes libperl compile
+
+@DPATCH@
+
+--- src/configure.orig	2014-10-20 17:28:40.411891213 +0000
++++ src/configure	2014-10-20 17:29:53.843916521 +0000
+@@ -22923,11 +22923,11 @@
+ 	&& test -n "$perl_interpreter"
+ then
+   SAVE_CFLAGS="$CFLAGS"
+-  SAVE_LDFLAGS="$LDFLAGS"
++  SAVE_LIBS="$LIBS"
+   PERL_CFLAGS=`ARCHFLAGS="" $perl_interpreter -MExtUtils::Embed -e ccopts`
+-  PERL_LDFLAGS=`ARCHFLAGS="" $perl_interpreter -MExtUtils::Embed -e ldopts`
++  PERL_LIBS=`ARCHFLAGS="" $perl_interpreter -MExtUtils::Embed -e ldopts`
+   CFLAGS="$CFLAGS $PERL_CFLAGS"
+-  LDFLAGS="$LDFLAGS $PERL_LDFLAGS"
++  LIBS="$LIBS $PERL_LIBS"
+ 
+   { $as_echo "$as_me:${as_lineno-$LINENO}: checking for libperl" >&5
+ $as_echo_n "checking for libperl... " >&6; }

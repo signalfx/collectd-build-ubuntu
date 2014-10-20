@@ -27,8 +27,10 @@ CPPFLAGS += -DLT_LAZY_OR_NOW='RTLD_LAZY|RTLD_GLOBAL'
 
 # Upstream defaults to ${sysconfdir}/collectd.conf. Setting ${sysconfdir} to
 # /etc/collectd would be wrong though.
+ifndef SIGNALFXBUILD
 CPPFLAGS += -UCONFIGFILE
 CPPFLAGS += -DCONFIGFILE='\"/etc/collectd/collectd.conf\"'
+endif
 
 # A PostgreSQL header redefines CACHE_LINE_SIZE on FreeBSD.
 # Cf. https://bugs.debian.org/760719 and https://bugs.debian.org/763098
@@ -43,7 +45,9 @@ JAVA_ARCHDIR = $(shell /usr/share/javahelper/java-arch.sh $(DEB_BUILD_ARCH))
 ifeq (,$(JAVA_ARCHDIR))
 	JAVA_ARCHDIR = $(DEB_BUILD_ARCH)
 endif
+ifndef JAVA_HOME
 JAVA_HOME = /usr/lib/jvm/default-java
+endif
 JAVA_LIBDIR = $(JAVA_HOME)/jre/lib/$(JAVA_ARCHDIR)/server
 
 JAVAC = $(JAVA_HOME)/bin/javac
@@ -53,15 +57,22 @@ JAVA_LDFLAGS = -L$(JAVA_LIBDIR) -Wl,-rpath -Wl,$(JAVA_LIBDIR)
 
 include /usr/share/dpatch/dpatch.make
 
+ifndef PREFIX 
+PREFIX=/usr
+endif
+
 confflags = --host=$(DEB_HOST_GNU_TYPE) \
-			--build=$(DEB_BUILD_GNU_TYPE) --prefix=/usr \
+			--build=$(DEB_BUILD_GNU_TYPE) --prefix=${PREFIX}\
 			--mandir=\$${prefix}/share/man \
-			--localstatedir=/var --sysconfdir=/etc \
 			--with-perl-bindings="INSTALLDIRS=vendor INSTALL_BASE=" \
 			--without-libstatgrab \
 			--without-included-ltdl \
 			--disable-static \
 			--enable-all-plugins
+
+ifndef SIGNALFXBUILD
+confflags += --localstatedir=/var --sysconfdir=/etc
+endif
 
 # These plugins do not provide any functionality under Linux.
 # MacOS only (requires IO Kit):
@@ -176,7 +187,7 @@ config.status: configure $(DPATCH_STAMPFN)
 		fi; done )
 	
 	# This is a work-around for #474087 (broken openipmi .pc files).
-	mkdir debian/pkgconfig
+	mkdir -p debian/pkgconfig
 	sed -re 's/^(Requires:.*) pthread(.*)$$/\1\2/' \
 		/usr/lib/pkgconfig/OpenIPMIpthread.pc \
 		> debian/pkgconfig/OpenIPMIpthread.pc
@@ -201,7 +212,9 @@ build-stamp: config.status
 
 clean: unpatch
 	dh_testdir
+ifndef SIGNALFXBUILD
 	dh_testroot
+endif
 	rm -f build-stamp
 	
 	[ ! -f Makefile ] || $(MAKE) distclean
