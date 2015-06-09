@@ -8,7 +8,7 @@
 diff a/contrib/collection.cgi b/contrib/collection.cgi
 --- a/contrib/collection.cgi
 +++ b/contrib/collection.cgi
-@@ -985,9 +985,9 @@
+@@ -984,9 +984,9 @@
  
    $GraphDefs =
    {
@@ -21,3 +21,55 @@ diff a/contrib/collection.cgi b/contrib/collection.cgi
      'CDEF:min=min_raw,8,*',
      'CDEF:avg=avg_raw,8,*',
      'CDEF:max=max_raw,8,*',
+@@ -1003,9 +1003,9 @@
+     'GPRINT:avg:LAST:%5.1lf%s Last',
+     'GPRINT:avg_sum:LAST:(ca. %5.1lf%sB Total)\l'
+     ],
+-   apache_connections => ['DEF:min={file}:count:MIN',
+-    'DEF:avg={file}:count:AVERAGE',
+-    'DEF:max={file}:count:MAX',
++   apache_connections => ['DEF:min={file}:value:MIN',
++    'DEF:avg={file}:value:AVERAGE',
++    'DEF:max={file}:value:MAX',
+     "AREA:max#$HalfBlue",
+     "AREA:min#$Canvas",
+     "LINE1:avg#$FullBlue:Connections",
+@@ -1025,9 +1025,9 @@
+     'GPRINT:max:MAX:%6.2lf Max,',
+     'GPRINT:avg:LAST:%6.2lf Last'
+     ],
+-    apache_idle_workers => ['DEF:min={file}:count:MIN',
+-    'DEF:avg={file}:count:AVERAGE',
+-    'DEF:max={file}:count:MAX',
++    apache_idle_workers => ['DEF:min={file}:value:MIN',
++    'DEF:avg={file}:value:AVERAGE',
++    'DEF:max={file}:value:MAX',
+     "AREA:max#$HalfBlue",
+     "AREA:min#$Canvas",
+     "LINE1:avg#$FullBlue:Idle Workers",
+@@ -1036,9 +1036,9 @@
+     'GPRINT:max:MAX:%6.2lf Max,',
+     'GPRINT:avg:LAST:%6.2lf Last'
+     ],
+-    apache_requests => ['DEF:min={file}:count:MIN',
+-    'DEF:avg={file}:count:AVERAGE',
+-    'DEF:max={file}:count:MAX',
++    apache_requests => ['DEF:min={file}:value:MIN',
++    'DEF:avg={file}:value:AVERAGE',
++    'DEF:max={file}:value:MAX',
+     "AREA:max#$HalfBlue",
+     "AREA:min#$Canvas",
+     "LINE1:avg#$FullBlue:Requests/s",
+@@ -1047,9 +1047,9 @@
+     'GPRINT:max:MAX:%6.2lf Max,',
+     'GPRINT:avg:LAST:%6.2lf Last'
+     ],
+-    apache_scoreboard => ['DEF:min={file}:count:MIN',
+-    'DEF:avg={file}:count:AVERAGE',
+-    'DEF:max={file}:count:MAX',
++    apache_scoreboard => ['DEF:min={file}:value:MIN',
++    'DEF:avg={file}:value:AVERAGE',
++    'DEF:max={file}:value:MAX',
+     "AREA:max#$HalfBlue",
+     "AREA:min#$Canvas",
+     "LINE1:avg#$FullBlue:Processes",
