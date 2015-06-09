@@ -8,16 +8,3 @@
 diff a/contrib/collection.cgi b/contrib/collection.cgi
 --- a/contrib/collection.cgi
 +++ b/contrib/collection.cgi
-@@ -984,9 +984,9 @@
- 
-   $GraphDefs =
-   {
--    apache_bytes => ['DEF:min_raw={file}:count:MIN',
--    'DEF:avg_raw={file}:count:AVERAGE',
--    'DEF:max_raw={file}:count:MAX',
-+    apache_bytes => ['DEF:min_raw={file}:value:MIN',
-+    'DEF:avg_raw={file}:value:AVERAGE',
-+    'DEF:max_raw={file}:value:MAX',
-     'CDEF:min=min_raw,8,*',
-     'CDEF:avg=avg_raw,8,*',
-     'CDEF:max=max_raw,8,*',
