@@ -1,7 +1,6 @@
 rrd_filter_path.dpatch
 collection_conf_path.dpatch
 myplugin_includes.dpatch
-myplugin_api.dpatch
 bts559801_plugin_find_fix.dpatch
 bts770681_riemann_ack.dpatch
 bts747093_lvm_segfault.dpatch
