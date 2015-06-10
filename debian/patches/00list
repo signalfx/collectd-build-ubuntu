@@ -2,5 +2,4 @@ rrd_filter_path.dpatch
 collection_conf_path.dpatch
 myplugin_includes.dpatch
 bts770693_timestamps.dpatch
-bts770694_loglevel.dpatch
 configure.dpatch
