@@ -116,6 +116,13 @@ confflags += --disable-xmms
 # libkstat is required for the xfs_arc plugin.
 confflags += --disable-zfs-arc
 
+#signalFx ubuntu build 1204
+confflags += \
+		--disable-lvm \
+		--disable-turbostat \
+		--disable-write_kafka
+
+
 # These plugins are Linux-specific.
 ifneq (,$(filter kfreebsd-i386 kfreebsd-amd64, $(DEB_BUILD_ARCH)))
 	confflags += \
