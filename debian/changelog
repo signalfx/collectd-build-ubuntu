@@ -1,9 +1,9 @@
 collectd (5.5.0-0) unstable; urgency=medium
 
   * debian/patches:
-    - Fixed configure to remove the dependencies that are not supported by ubuntu 12.04.
+    - Fixed configure to remove the dependencies that are not supported by ubuntu 15.04.
 
- -- SignalFx Inc <signalfx.com>  Sun, 15 Jun 2015 15:27:15 +0100
+ -- SignalFx Inc <signalfx.com>  Sun, 16 Jun 2015 10:35:15 +0100
 
 collectd (5.4.1-6) unstable; urgency=medium
 
