@@ -1,3 +1,9 @@
+collectd (5.5.0-sfx1~trusty) trusty; urgency=low
+
+  * Initial release
+
+ -- signalfx <uday@signalfx.com>  Wed, 17 Jun 2015 16:50:34 +0000
+
 collectd (5.4.1-6) unstable; urgency=medium
 
   * debian/patches:
@@ -1434,4 +1440,3 @@ collectd (3.9.4+debian-1) unstable; urgency=low
     AMD64.
 
  -- Sebastian Harl <sh@tokkee.org>  Fri,  7 Jul 2006 15:49:42 +0200
-
