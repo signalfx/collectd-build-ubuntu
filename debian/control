@@ -44,7 +44,16 @@ Build-Depends: debhelper (>= 5), dpkg-dev (>= 1.14.10), po-debconf, dpatch,
  linux-libc-dev (>= 2.6.25-4) [linux-any] | linux-libc-dev (<< 2.6.25-1) [linux-any],
  default-jdk [!hppa !sparc !kfreebsd-i386 !kfreebsd-amd64],
  protobuf-c-compiler,
- python-dev
+ python-dev,
+ libprotobuf-c0-dev,
+ libtokyocabinet-dev,
+ libtokyotyrant-dev,
+ libupsclient-dev,
+ automake,
+ libi2c-dev,
+ librdkafka-dev,
+ libatasmart-dev,
+ libldap2-dev
 Build-Conflicts: libpthread-dev, libhal-dev
 Standards-Version: 3.9.5
 Homepage: http://collectd.org/

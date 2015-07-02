@@ -192,6 +192,7 @@ config.status: configure $(DPATCH_STAMPFN)
 		/usr/lib/pkgconfig/OpenIPMIpthread.pc \
 		> debian/pkgconfig/OpenIPMIpthread.pc
 	
+	chmod 755 configure
 	PKG_CONFIG_PATH="$(CURDIR)/debian/pkgconfig:$$PKG_CONFIG_PATH" \
 	./configure $(confflags) CPPFLAGS="$(CPPFLAGS)" CFLAGS="$(CFLAGS)" LDFLAGS="$(LDFLAGS)" \
 		JAVAC="$(JAVAC)" JAR="$(JAR)" JAVA_CPPFLAGS="$(JAVA_CPPFLAGS)" \
