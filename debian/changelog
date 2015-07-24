@@ -1,8 +1,8 @@
 collectd (5.5.0-sfx1~trusty) trusty; urgency=low
 
-  * Initial release
+  * Complete collectd 5.5.0 build for Ubuntu 14.04
 
- -- signalfx <uday@signalfx.com>  Wed, 17 Jun 2015 16:50:34 +0000
+ -- SignalFx Support <support+deb@signalfx.com>  Wed, 17 Jun 2015 16:50:34 +0000
 
 collectd (5.4.1-6) unstable; urgency=medium
 

@@ -1,6 +1,6 @@
 --- debian/control	2015-07-02 01:52:05.397048049 +0000
 +++ debian/control_12	2015-07-02 01:53:05.141048385 +0000
-@@ -48,11 +48,11 @@
+@@ -48,11 +48,10 @@
   libprotobuf-c0-dev,
   libtokyocabinet-dev,
   libtokyotyrant-dev,
@@ -10,7 +10,6 @@
   libi2c-dev,
 - librdkafka-dev,
   libatasmart-dev,
-+ libcap-dev,
   libldap2-dev
  Build-Conflicts: libpthread-dev, libhal-dev
  Standards-Version: 3.9.5
