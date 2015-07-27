@@ -29,6 +29,24 @@
 # ========================================================================================
 
 set -e
+
+check_for_command(){
+ set +e
+ which $1 > /dev/null
+ if [ $? -ne 0 ]; then
+   printf "Unable to find %s. Please install or check your PATH\n" "$1"
+   exit 1;
+ fi
+ set -e
+}
+
+if [ $# -eq 0 ]; then
+  printf "Usage: ./promote_beta_to_release.sh VERSION KEYID\n" 1>&2
+  exit 2;
+fi
+
+check_for_command debsign
+
 BETA_PPA="signalfx/collectd-beta"
 RELEASE_PPA="signalfx/collectd-release"
 
@@ -43,7 +61,7 @@ template="http://ppa.launchpad.net/${BETA_PPA}/ubuntu/pool/main/c/collectd/colle
 VERSION=$1
 KEYID=$2
 
-for DISTRIBUTION in "precise" "utopic" "trusty" "vivid"
+for DISTRIBUTION in "precise" "trusty" "vivid"
 do
         mkdir $DISTRIBUTION
         cd $DISTRIBUTION
