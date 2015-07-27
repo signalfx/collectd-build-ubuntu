@@ -41,7 +41,7 @@ cd /tmp/collectd-ppa-uploads/
 echo  "Downloading files from S3 Bucket, It may take some time..."
 aws s3 cp --recursive s3://collectd-builds-ubuntu/ .
 
-for DISTRIBUTION in "precise" "trusty" "utopic" "vivid"
+for DISTRIBUTION in "precise" "trusty" "vivid"
 do
         if [ -f /tmp/collectd-ppa-uploads/$DISTRIBUTION/debuild/*.dsc ]
         then
