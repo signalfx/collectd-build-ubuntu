@@ -49,6 +49,7 @@ check_for_command debsign
 
 TEST_PPA="signalfx/collectd-test"
 BETA_PPA="signalfx/collectd-beta"
+OS_ARRAY=("precise" "trusty" "vivid")
 
 rm -rf /tmp/test_upgrade
 mkdir -p /tmp/test_upgrade
@@ -61,7 +62,7 @@ template="http://ppa.launchpad.net/${TEST_PPA}/ubuntu/pool/main/c/collectd/colle
 VERSION=$1
 KEYID=$2
 
-for DISTRIBUTION in "precise" "trusty" "vivid"
+for DISTRIBUTION in ${OS_ARRAY[@]}
 do
         mkdir $DISTRIBUTION
         cd $DISTRIBUTION

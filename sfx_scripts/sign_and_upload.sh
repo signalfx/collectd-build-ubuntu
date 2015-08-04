@@ -54,6 +54,7 @@ check_for_command debsign
 
 KEYID=$1
 TEST_PPA="ppa:signalfx/collectd-test"
+OS_ARRAY=("precise" "trusty" "vivid")
 
 rm -rf /tmp/collectd-ppa-uploads/
 mkdir /tmp/collectd-ppa-uploads/
@@ -61,7 +62,7 @@ cd /tmp/collectd-ppa-uploads/
 echo  "Downloading files from S3 Bucket, It may take some time..."
 aws s3 cp --recursive s3://collectd-builds-ubuntu/ .
 
-for DISTRIBUTION in "precise" "trusty" "vivid"
+for DISTRIBUTION in ${OS_ARRAY[@]}
 do
         if [ -f /tmp/collectd-ppa-uploads/$DISTRIBUTION/debuild/*.dsc ]
         then
