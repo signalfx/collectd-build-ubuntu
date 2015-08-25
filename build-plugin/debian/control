@@ -1,0 +1,11 @@
+Source: signalfx-collectd-plugin
+Section: python
+Priority: optional
+Maintainer: SignalFx, Inc. <support+deb@signalfx.com>
+Build-Depends: debhelper (>= 8.0.0)
+Standards-Version: 3.9.4
+
+Package: signalfx-collectd-plugin
+Architecture: any
+Depends: ${shlibs:Depends}, ${misc:Depends}
+Description: Installs signalfx's meta-data plugin
