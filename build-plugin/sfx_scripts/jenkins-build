@@ -1,0 +1,18 @@
+#!/bin/bash -ex
+#This script is to build the collectd-signalfx plugin in Jenkins. It need the environment variables JOB_NAME and BASE_DIR.
+
+if ! [ -z $JOB_NAME ] && ! [ -z $BASE_DIR ]; then
+  tempfolder=$(mktemp -d $(pwd)/0.XXXXXX)
+  trap "rm -rf $tempfolder; docker rm ${JOB_NAME}" EXIT
+  #Build the packages
+  docker run --privileged --name ${JOB_NAME} -t -v ${BASE_DIR}/${JOB_NAME}/signalfx-collectd-plugin:/opt/signalfx-collectd-plugin -v ${BASE_DIR}/${JOB_NAME}/collectd-build-ubuntu/build-plugin:/opt/collectd-plugin-build-debian -v ${BASE_DIR}/${JOB_NAME}/workspace:/opt/workspace -v ${BASE_DIR}/${JOB_NAME}/$(basename $tempfolder):/opt/result quay.io/signalfuse/collectd-build-ubuntu /opt/collectd-plugin-build-debian/sfx_scripts/cmdseq
+
+  if ! [ -z $BUILD_PUBLISH ] && [ $BUILD_PUBLISH = True ]; then
+        OUTPUT=$tempfolder      
+        # Upload the packages to Amazon S3 bucket
+        aws s3 rm --recursive s3://collectd-builds-ubuntu/signalfx-collectd-plugin/
+        aws s3 cp --recursive $OUTPUT s3://collectd-builds-ubuntu/signalfx-collectd-plugin/
+  fi
+  exit 0;
+fi
+exit 1;

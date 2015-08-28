@@ -1,0 +1,5 @@
+signalfx-collectd-plugin (0.1.0~stable) stable; urgency=low
+
+  * Initial release
+
+ -- SignalFx, Inc. <support+deb@signalfx.com>  Fri, 07 Aug 2015 23:29:55 +0000
