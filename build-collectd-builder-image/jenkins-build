@@ -1,0 +1,8 @@
+#!/bin/bash
+set -ex
+
+docker build -t quay.io/signalfuse/collectd-build-ubuntu:latest .
+
+if ! [ -z $BUILD_PUBLISH ] && [ $BUILD_PUBLISH = True ]; then
+    docker push quay.io/signalfuse/collectd-build-ubuntu:latest
+fi
