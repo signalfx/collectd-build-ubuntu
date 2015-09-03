@@ -15,9 +15,32 @@ do
   mkdir plugins
 
   cp -rf /opt/signalfx-collectd-plugin/src/* ./plugins/
+  cp -f /opt/signalfx-collectd-plugin/requirements.txt ./plugins/.
+  cp -f /opt/signalfx-collectd-plugin/*.md ./plugins/.
   cp -rf /opt/collectd-plugin-build-debian/* .
-  sed -i 's/stable/'${DISTRIBUTION}'/g' debian/changelog
+
+  apt-get -y install gcc python-dev curl
+  curl https://bitbucket.org/pypa/setuptools/raw/bootstrap/ez_setup.py | python -
+  curl https://raw.githubusercontent.com/pypa/pip/master/contrib/get-pip.py | python -
+  pip install virtualenv
   
+  rm -rf venv
+  virtualenv venv
+  . venv/bin/activate
+  pip install -r plugins/requirements.txt
+  rm -f plugins/requirements.txt
+  pip freeze > new_requirements.txt
+  cat new_requirements.txt
+  for x in `cat new_requirements.txt | awk -F'==' '{print $1}'| awk -F'-' '{print $1}' | awk -F. '{print $1}'`; do echo $x; cp -a venv/lib/python*/site-packages/$x* plugins/.; done
+  deactivate
+  
+  # verify, don't build broken package
+  for x in plugins/*.py; do
+    python $x once
+  done
+
+  sed -i 's/stable/'${DISTRIBUTION}'/g' debian/changelog
+    
   yes | debuild -us -uc -S
   cp -rf ../* /opt/result/$DISTRIBUTION/debuild/
 
