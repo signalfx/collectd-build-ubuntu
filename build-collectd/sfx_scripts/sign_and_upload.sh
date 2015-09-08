@@ -60,7 +60,7 @@ rm -rf /tmp/collectd-ppa-uploads/
 mkdir /tmp/collectd-ppa-uploads/
 cd /tmp/collectd-ppa-uploads/
 echo  "Downloading files from S3 Bucket, It may take some time..."
-aws s3 cp --recursive s3://collectd-builds-ubuntu/ .
+aws s3 cp --recursive s3://collectd-builds-ubuntu/collectd/ .
 
 for DISTRIBUTION in ${OS_ARRAY[@]}
 do
