@@ -4,7 +4,7 @@ signalfx-collectd-plugin (0.1.1~trusty) trusty; urgency=medium
 
  -- Signalfx, Inc. <support+deb@signalfx.com>  Wed, 23 Sep 2015 20:44:25 +0000
 
-signalfx-collectd-plugin (0.1.0~stable) stable; urgency=low
+signalfx-collectd-plugin (0.1.0~trusty) trusty; urgency=low
 
   * Initial release
 

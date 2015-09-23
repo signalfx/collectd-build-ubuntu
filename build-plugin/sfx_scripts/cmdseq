@@ -39,7 +39,7 @@ do
     python $x once
   done
 
-  sed -i 's/stable/'${DISTRIBUTION}'/g' debian/changelog
+  sed -i 's/trusty/'${DISTRIBUTION}'/g' debian/changelog
     
   yes | debuild -us -uc -S
   cp -rf ../* /opt/result/$DISTRIBUTION/debuild/
