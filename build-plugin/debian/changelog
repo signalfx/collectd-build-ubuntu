@@ -1,3 +1,9 @@
+signalfx-collectd-plugin (0.1.5~trusty) trusty; urgency=medium
+
+  * Upgrade to plugin 0.0.6
+
+ -- Signalfx, Inc. <support+deb@signalfx.com>  Fri, 28 Sep 2015 18:46:31 +0000
+
 signalfx-collectd-plugin (0.1.4~trusty) trusty; urgency=medium
 
   * Repackage plugin 0.0.5
