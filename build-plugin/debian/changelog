@@ -1,14 +1,15 @@
-signalfx-collectd-plugin (0.1.6~trusty) UNRELEASED; urgency=medium
+signalfx-collectd-plugin (0.1.6~trusty) trusty; urgency=medium
 
+  * Upgrade to plugin 0.0.7
   * Make collectd a dependency
 
- -- Signalfx, Inc. <vagrant@tedo-signalbox>  Wed, 30 Sep 2015 16:00:01 +0000
+ -- Signalfx, Inc. <support+deb@signalfx.com>  Wed, 30 Sep 2015 16:33:31 +0000
 
 signalfx-collectd-plugin (0.1.5~trusty) trusty; urgency=medium
 
   * Upgrade to plugin 0.0.6
 
- -- Signalfx, Inc. <support+deb@signalfx.com>  Fri, 28 Sep 2015 18:46:31 +0000
+ -- Signalfx, Inc. <support+deb@signalfx.com>  Mon, 28 Sep 2015 18:46:31 +0000
 
 signalfx-collectd-plugin (0.1.4~trusty) trusty; urgency=medium
 
