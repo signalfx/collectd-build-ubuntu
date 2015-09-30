@@ -7,6 +7,5 @@ Standards-Version: 3.9.4
 
 Package: signalfx-collectd-plugin
 Architecture: any
-Depends: ${shlibs:Depends}, ${misc:Depends}
+Depends: ${shlibs:Depends}, ${misc:Depends}, collectd
 Description: Installs signalfx's meta-data plugin
-Depends: collectd
