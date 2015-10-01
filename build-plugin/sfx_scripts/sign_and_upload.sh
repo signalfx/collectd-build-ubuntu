@@ -33,15 +33,7 @@
 
 set -e
 
-check_for_command(){
- set +e
- which $1 > /dev/null
- if [ $? -ne 0 ]; then
-   printf "Unable to find %s. Please install or check your PATH\n" "$1"
-   exit 1;
- fi
- set -e
-}
+. environ.sh
 
 if [ $# -eq 0 ]; then
   printf "Usage: ./sign_and_upload.sh KEYID\n" 1>&2
@@ -53,8 +45,6 @@ check_for_command aws
 check_for_command debsign
 
 KEYID=$1
-TEST_PPA="ppa:signalfx/collectd-test"
-OS_ARRAY=("precise" "trusty" "vivid")
 
 rm -rf /tmp/collectd-ppa-uploads/
 mkdir /tmp/collectd-ppa-uploads/
@@ -68,7 +58,7 @@ do
         then
                 cd /tmp/collectd-ppa-uploads/$DISTRIBUTION/debuild/
 		debsign -k$KEYID *.changes
-                dput -f $TEST_PPA *.changes
+                dput -f ppa:$TEST_PPA *.changes
         fi
 done
 rm -rf /tmp/collectd-ppa-uploads/
