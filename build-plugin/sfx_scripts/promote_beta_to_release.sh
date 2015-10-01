@@ -30,26 +30,14 @@
 
 set -e
 
-check_for_command(){
- set +e
- which $1 > /dev/null
- if [ $? -ne 0 ]; then
-   printf "Unable to find %s. Please install or check your PATH\n" "$1"
-   exit 1;
- fi
- set -e
-}
-
 if [ $# -eq 0 ]; then
   printf "Usage: ./promote_beta_to_release.sh VERSION KEYID\n" 1>&2
   exit 2;
 fi
 
-check_for_command debsign
+. environ.sh
 
-BETA_PPA="signalfx/collectd-beta"
-RELEASE_PPA="signalfx/collectd-release"
-OS_ARRAY=("precise" "trusty" "vivid")
+check_for_command debsign
 
 rm -rf /tmp/beta_upgrade
 mkdir -p /tmp/beta_upgrade
