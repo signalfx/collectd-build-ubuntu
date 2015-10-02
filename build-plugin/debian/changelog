@@ -1,3 +1,9 @@
+signalfx-collectd-plugin (0.1.10~trusty) trusty; urgency=medium
+
+  * Upgrade to plugin 0.0.8
+
+ -- Signalfx, Inc. <support+deb@signalfx.com>  Thu, 2 Oct 2015 00:09:31 +0000
+
 signalfx-collectd-plugin (0.1.9~trusty) trusty; urgency=medium
 
   * Add interval before sending notifications
