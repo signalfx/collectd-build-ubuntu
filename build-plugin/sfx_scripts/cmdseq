@@ -19,11 +19,6 @@ do
   cp -f /opt/signalfx-collectd-plugin/*.md ./plugins/.
   cp -rf /opt/collectd-plugin-build-debian/* .
 
-  # verify, don't build broken package
-  for x in plugins/*.py; do
-    python $x once
-  done
-
   sed -i 's/trusty/'${DISTRIBUTION}'/g' debian/changelog
     
   yes | debuild -us -uc -S

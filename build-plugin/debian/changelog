@@ -1,3 +1,10 @@
+signalfx-collectd-plugin (0.1.11~trusty) trusty; urgency=medium
+
+  * Upgrade to plugin 0.0.9
+  * Use psutil
+
+ -- Signalfx, Inc. <support+deb@signalfx.com>  Thu, 28 Oct 2015 00:09:31 +0000
+
 signalfx-collectd-plugin (0.1.10~trusty) trusty; urgency=medium
 
   * Upgrade to plugin 0.0.8
