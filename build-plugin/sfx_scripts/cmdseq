@@ -15,14 +15,9 @@ do
   mkdir plugins
 
   cp -rf /opt/signalfx-collectd-plugin/src/* ./plugins/
-  cp -f /opt/signalfx-collectd-plugin/requirements.txt ./plugins/.
   cp -f /opt/signalfx-collectd-plugin/*.md ./plugins/.
   cp -rf /opt/collectd-plugin-build-debian/* .
-
-  # verify, don't build broken package
-  for x in plugins/*.py; do
-    python $x once
-  done
+  wget https://pypi.python.org/packages/source/p/psutil/psutil-3.2.2.tar.gz#md5=56df1727c9e26076a80da4c3f8f67976
 
   sed -i 's/trusty/'${DISTRIBUTION}'/g' debian/changelog
     

@@ -2,7 +2,7 @@ Source: signalfx-collectd-plugin
 Section: python
 Priority: optional
 Maintainer: SignalFx, Inc. <support+deb@signalfx.com>
-Build-Depends: debhelper (>= 8.0.0)
+Build-Depends: debhelper (>= 8.0.0), python-dev, curl, python-pip, python-virtualenv
 Standards-Version: 3.9.4
 
 Package: signalfx-collectd-plugin

@@ -2,4 +2,9 @@
 %:
 	dh $@
 override_dh_install:
+	sh debian/deps.sh
+	# verify, don't build broken package
+	for x in plugins/*.py; do python $$x once; done
+
+	find plugins
 	dh_install plugins/*  opt/signalfx-collectd-plugin
