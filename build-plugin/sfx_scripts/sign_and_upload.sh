@@ -31,7 +31,7 @@
 # proceed further only if there are no errors.
 # ========================================================================================
 
-set -e
+set -ex
 
 . environ.sh
 
