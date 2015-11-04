@@ -1,4 +1,4 @@
-signalfx-collectd-plugin (0.1.18~trusty) trusty; urgency=medium
+signalfx-collectd-plugin (0.1.19~trusty) trusty; urgency=medium
 
   * Upgrade to plugin 0.0.9
   * Use psutil
