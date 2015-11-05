@@ -1,3 +1,8 @@
+signalfx-collectd-plugin (0.2.0~trusty) trusty; urgency=medium
+  * add dogstatsd support
+
+ -- Signalfx, Inc. <support+deb@signalfx.com>  Wed, 05 Nov 2015 00:17:31 +0000
+
 signalfx-collectd-plugin (0.1.19~trusty) trusty; urgency=medium
 
   * Upgrade to plugin 0.0.9

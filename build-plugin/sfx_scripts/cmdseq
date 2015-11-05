@@ -14,10 +14,19 @@ do
   cd /opt/workspace/signalfx-collectd-plugin
   mkdir plugins
 
-  cp -rf /opt/signalfx-collectd-plugin/src/* ./plugins/
+  cp -rf /opt/signalfx-collectd-plugin/src/* ./plugins/.
+  rm -f plugins/test*.py
   cp -f /opt/signalfx-collectd-plugin/*.md ./plugins/.
   cp -rf /opt/collectd-plugin-build-debian/* .
+
+  #dependencies
   wget https://pypi.python.org/packages/source/p/psutil/psutil-3.2.2.tar.gz#md5=56df1727c9e26076a80da4c3f8f67976
+  wget https://pypi.python.org/packages/source/s/simplejson/simplejson-3.8.1.tar.gz#md5=b8441f1053edd9dc335ded8c7f98a974
+  virtualenv venv
+  . venv/bin/activate
+  pip install signalfx
+  pip freeze > requirements.txt
+  cat requirements.txt
 
   sed -i 's/trusty/'${DISTRIBUTION}'/g' debian/changelog
     
