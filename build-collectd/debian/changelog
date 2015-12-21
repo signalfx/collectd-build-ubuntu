@@ -1,4 +1,4 @@
-collectd (5.5.0-sfx5~trusty) trusty; urgency=medium
+collectd (5.5.0-sfx6~trusty) trusty; urgency=medium
 
   * increase DATA_MAX_NAME_LEN from 64 to 128 bytes
 
