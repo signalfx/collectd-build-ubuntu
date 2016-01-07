@@ -1,8 +1,12 @@
-collectd (5.5.0-sfx6~trusty) trusty; urgency=medium
+collectd (5.5.0-sfx7~trusty) trusty; urgency=medium
 
-  * increase DATA_MAX_NAME_LEN from 64 to 128 bytes
+  * Log http error codes other than 200
+  * plugin.c: emit log message when plugin loading succeeds
+  * Support for call the flush callback at regular intervals using the read plugin callback.
+  * add notifications to write_http
+  * increase DATA_MAX_NAME_LEN from to 1024
 
- -- Signalfx Support <support+deb@signalfx.com>  Fri, 15 Sep 2015 10:10:02 +0000
+ -- Signalfx Support <support+deb@signalfx.com>  Wed, 6 Jan 2016 18:00:02 +0000
 
 collectd (5.5.0-sfx4~trusty) trusty; urgency=medium
 
