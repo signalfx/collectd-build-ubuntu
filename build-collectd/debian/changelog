@@ -1,12 +1,13 @@
-collectd (5.5.0-sfx7~trusty) trusty; urgency=medium
+collectd (5.5.0-sfx8~trusty) trusty; urgency=medium
 
   * Log http error codes other than 200
   * plugin.c: emit log message when plugin loading succeeds
   * Support for call the flush callback at regular intervals using the read plugin callback.
   * add notifications to write_http
   * increase DATA_MAX_NAME_LEN from to 1024
+  * bring up to date with collectd-5.5 branch
 
- -- Signalfx Support <support+deb@signalfx.com>  Wed, 6 Jan 2016 18:00:02 +0000
+ -- Signalfx Support <support+deb@signalfx.com>  Tue, 12 Jan 2016 13:00:02 +0000
 
 collectd (5.5.0-sfx4~trusty) trusty; urgency=medium
 
