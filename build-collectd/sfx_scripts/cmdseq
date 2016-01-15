@@ -14,7 +14,7 @@ cp -rf /opt/collectd/* .
 
 sed -i 's/trusty/'${DISTRIBUTION}'/g' debian/changelog
 
-if [ "$DISTRIBUTION" = "precise" ]; then
+if [ "$DISTRIBUTION" = "precise" ] || [ "$DISTRIBUTION" = "wheezy" ]; then
 patch -p0 < debian/patches/precise_control.patch
 patch -p0 < debian/patches/precise_rules.patch
 fi
