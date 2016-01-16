@@ -5,7 +5,7 @@ if [ "$CI" == true ]; then
   tempfolder=$(mktemp -d $(pwd)/0.XXXXXX)
   trap "rm -rf $tempfolder" EXIT
   #Build the packages
-  docker run --privileged --name ${ARTIFACT_NAME} -e "DISTRIBUTION=${DISTRIBUTION}" -t -v ${BASE_DIR}/collectd:/opt/collectd -v ${BASE_DIR}/collectd-build-ubuntu/build-collectd:/opt/collectd-build -v ${BASE_DIR}/workspace:/opt/workspace -v ${BASE_DIR}/$(basename $tempfolder):/opt/result -v ${BASE_DIR}/pbuilder:/var/cache/pbuilder quay.io/signalfuse/collectd-build-ubuntu /opt/collectd-build/sfx_scripts/cmdseq
+  docker run --privileged --name ${JOB_NAME} -e "DISTRIBUTION=${DISTRIBUTION}" -t -v ${BASE_DIR}/collectd:/opt/collectd -v ${BASE_DIR}/collectd-build-ubuntu/build-collectd:/opt/collectd-build -v ${BASE_DIR}/workspace:/opt/workspace -v ${BASE_DIR}/$(basename $tempfolder):/opt/result -v ${BASE_DIR}/pbuilder:/var/cache/pbuilder quay.io/signalfuse/collectd-build-ubuntu /opt/collectd-build/sfx_scripts/cmdseq
 else
   if ! [ -z $JOB_NAME ] && ! [ -z $BASE_DIR ]; then
     tempfolder=$(mktemp -d $(pwd)/0.XXXXXX)
