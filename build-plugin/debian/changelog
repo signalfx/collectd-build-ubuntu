@@ -1,8 +1,9 @@
-signalfx-collectd-plugin (0.2.4~trusty) trusty; urgency=medium
-  * plugin version 0.0.11
+signalfx-collectd-plugin (0.2.5~trusty) trusty; urgency=medium
+  * plugin version 0.0.12
   * add a few metrics on dpm, errors and response times
+  * report plugin uptime not system uptime
 
- -- Signalfx, Inc. <support+deb@signalfx.com>  Thu, 07 Jan 2016 00:17:31 +0000
+ -- Signalfx, Inc. <support+deb@signalfx.com>  Mon, 19 Jan 2016 11:17:31 +0000
 
 signalfx-collectd-plugin (0.2.3~trusty) trusty; urgency=medium
   * add dogstatsd support
