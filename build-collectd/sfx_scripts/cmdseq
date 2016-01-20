@@ -35,12 +35,22 @@ DIST=${DISTRIBUTION} ARCH=amd64 yes | debuild -us -uc -S
 rm -rf /opt/result/*
 mkdir -p /opt/result/debuild
 cp -rf ../* /opt/result/debuild/
-rm -rf /var/cache/pbuilder/*
+
+if [[ "$BUILD_PUBLISH" == "True" ]]; then
+	DELETE_PUBUILDER_CACHE_FOLDER="rm -rf /var/cache/pbuilder/*"
+else
+	# make pbuilder faster during development by mounting the cached packages on to RAM
+	mkdir -p /var/cache/pbuilder/build
+	echo "tmpfs /var/cache/pbuilder/build tmpfs	defaults,auto 0	0" >> /etc/fstab
+	mount /var/cache/pbuilder/build
+	DELETE_PUBUILDER_CACHE_FOLDER=""
+fi
+
+eval $DELETE_PUBUILDER_CACHE_FOLDER
 sudo DIST=${DISTRIBUTION} ARCH=amd64 pbuilder create
 DIST=${DISTRIBUTION} ARCH=amd64 pdebuild /opt/result/debuild/*.dsc
 mkdir -p /opt/result/pdebuild/
 cp /var/cache/pbuilder/${DISTRIBUTION}-amd64/result/* /opt/result/pdebuild/
-rm -rf /var/cache/pbuilder/*
+eval $DELETE_PUBUILDER_CACHE_FOLDER
 cd ..
-#rm -rf collectd_*
 rm -rf /opt/result/debuild/collectd
