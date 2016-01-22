@@ -3,7 +3,7 @@
 
 if [ "$CI" == true ]; then
   tempfolder=$(mktemp -d $(pwd)/0.XXXXXX)
-  trap "rm -rf $tempfolder"
+  trap "rm -rf $tempfolder" EXIT
   #Build the packages
   docker run --privileged --name ${JOB_NAME} -t -v ${BASE_DIR}/signalfx-collectd-plugin:/opt/signalfx-collectd-plugin -v ${BASE_DIR}/collectd-build-ubuntu/build-plugin:/opt/collectd-plugin-build-debian -v ${BASE_DIR}/workspace:/opt/workspace -v ${BASE_DIR}/$(basename $tempfolder):/opt/result quay.io/signalfuse/collectd-build-ubuntu /opt/collectd-plugin-build-debian/sfx_scripts/cmdseq
 else
