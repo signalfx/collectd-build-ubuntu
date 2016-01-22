@@ -50,6 +50,7 @@ check_for_command debsign
 TEST_PPA="signalfx/collectd-test"
 BETA_PPA="signalfx/collectd-beta"
 OS_ARRAY=("precise" "trusty" "vivid")
+DEBIAN_OS_ARRAY=("wheezy" "jessie")
 
 rm -rf /tmp/test_upgrade
 mkdir -p /tmp/test_upgrade
@@ -76,4 +77,25 @@ do
         debsign -k$KEYID *.changes
         dput -f ppa:$BETA_PPA *.changes
 done
+
+for DISTRIBUTION in ${DEBIAN_OS_ARRAY[@]}
+do
+  S3_BUCKET="s3://public-downloads--signalfuse-com/debs/collectd"
+  mkdir $DISTRIBUTION
+  cd $DISTRIBUTION
+  aws s3 cp --recursive $S3_BUCKET/$DISTRIBUTION/test/ .
+  DIR="/tmp/test_upgrade/$DISTRIBUTION/pdebuild/"
+  if [ "$(ls -A $DIR)" ]; then
+    cd $DIR/..
+    rm -rf debuild
+    mv pdebuild debs
+    dpkg-scanpackages debs /dev/null > Packages
+    gzip -k Packages
+    apt-ftparchive release . > Release
+    gpg --default-key $KEYID -abs -o Release.gpg Release
+    aws s3 rm --recursive $S3_BUCKET/$DISTRIBUTION/beta/
+    aws s3 cp --recursive . $S3_BUCKET/$DISTRIBUTION/beta
+  fi
+done
+
 rm -rf /tmp/test_upgrade
