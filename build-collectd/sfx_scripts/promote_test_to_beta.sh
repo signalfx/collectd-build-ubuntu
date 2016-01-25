@@ -3,13 +3,16 @@
 # ========================================================================================
 # NOTE
 
-# This script promotes the packages from TEST_PPA to BETA_PPA. It does this by downloading
+# This script promotes the packages from TEST_PPA to BETA_PPA. 
+# For Ubuntu packages in launchpad, It does this by downloading
 # the source code tar ball of the version you have provided as argument, rebuilding the source package,
 # signing the package with your secret key and then uploading the package to BETA_PPA.
+# For Debian packages in our Amazon S3 bucket, it will simply copy all files from test folder in to beta
+# folder.
 
-# USAGE: ./promote_test_to_beta.sh VERSION KEYID
+# USAGE: ./promote_test_to_beta.sh KEYID UBUNTU_PACKAGE_VERSION
 
-# VERSION: The version number of the package you want to promote from test to beta ppa
+# UBUNTU_PACKAGE_VERSION: The version number of the package you want to promote from test to beta ppa
 # example: 5.5.0-sfx1
 # KEYID: Id of your secret key
 
@@ -41,7 +44,8 @@ check_for_command(){
 }
 
 if [ $# -eq 0 ]; then
-  printf "Usage: ./promote_test_to_beta.sh VERSION KEYID\n" 1>&2
+  printf "Usage: ./promote_test_to_beta.sh KEYID UBUNTU_PACKAGE_VERSION\n" 1>&2
+  printf "UBUNTU_PACKAGE_VERSION is the latest version in your Launchpad test ppa that you want to upgrade to beta"
   exit 2;
 fi
 
@@ -60,14 +64,14 @@ sudo apt-get -y install debhelper po-debconf pkg-config iptables-dev javahelper
 
 template="http://ppa.launchpad.net/${TEST_PPA}/ubuntu/pool/main/c/collectd/collectd_version~distribution.tar.gz"
 
-VERSION=$1
-KEYID=$2
+KEYID=$1
+UBUNTU_PACKAGE_VERSION=$2
 
 for DISTRIBUTION in ${OS_ARRAY[@]}
 do
         mkdir $DISTRIBUTION
         cd $DISTRIBUTION
-        URL=${template//version/$VERSION}
+        URL=${template//version/$UBUNTU_PACKAGE_VERSION}
         URL=${URL//distribution/$DISTRIBUTION}
         wget $URL
         tar xvf *.tar.gz
@@ -81,21 +85,8 @@ done
 for DISTRIBUTION in ${DEBIAN_OS_ARRAY[@]}
 do
   S3_BUCKET="s3://public-downloads--signalfuse-com/debs/collectd"
-  mkdir $DISTRIBUTION
-  cd $DISTRIBUTION
-  aws s3 cp --recursive $S3_BUCKET/$DISTRIBUTION/test/ .
-  DIR="/tmp/test_upgrade/$DISTRIBUTION/pdebuild/"
-  if [ "$(ls -A $DIR)" ]; then
-    cd $DIR/..
-    rm -rf debuild
-    mv pdebuild debs
-    dpkg-scanpackages debs /dev/null > Packages
-    gzip -k Packages
-    apt-ftparchive release . > Release
-    gpg --default-key $KEYID -abs -o Release.gpg Release
-    aws s3 rm --recursive $S3_BUCKET/$DISTRIBUTION/beta/
-    aws s3 cp --recursive . $S3_BUCKET/$DISTRIBUTION/beta
-  fi
+  aws s3 rm --recursive $S3_BUCKET/$DISTRIBUTION/beta/
+  aws s3 cp --recursive $S3_BUCKET/$DISTRIBUTION/test/ $S3_BUCKET/$DISTRIBUTION/beta/
 done
 
 rm -rf /tmp/test_upgrade
