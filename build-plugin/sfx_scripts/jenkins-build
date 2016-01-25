@@ -1,6 +1,11 @@
 #!/bin/bash -ex
 #This script is to build the collectd-signalfx plugin in Jenkins. It need the environment variables JOB_NAME and BASE_DIR.
 
+# Remove the docker container from last interrupted run
+if [[ $(docker ps -a | grep -w "${JOB_NAME}" | grep -Ev "grep") ]]; then
+  docker rm -f ${JOB_NAME}
+fi
+
 if ! [ -z $JOB_NAME ] && ! [ -z $BASE_DIR ]; then
   tempfolder=$(mktemp -d $(pwd)/0.XXXXXX)
   trap "rm -rf $tempfolder; docker rm ${JOB_NAME}" EXIT
