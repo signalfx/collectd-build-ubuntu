@@ -65,4 +65,11 @@ do
         dput -f ppa:$RELEASE_PPA *.changes
 done
 
+for DISTRIBUTION in ${DEBIAN_OS_ARRAY[@]}
+do
+  S3_BUCKET="s3://public-downloads--signalfuse-com/debs/signalfx-collectd-plugin"
+  aws s3 rm --recursive $S3_BUCKET/$DISTRIBUTION/release/
+  aws s3 cp --recursive $S3_BUCKET/$DISTRIBUTION/beta/ $S3_BUCKET/$DISTRIBUTION/release/
+done
+
 rm -rf /tmp/beta_upgrade

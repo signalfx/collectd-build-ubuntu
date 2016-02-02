@@ -12,11 +12,25 @@ if ! [ -z $JOB_NAME ] && ! [ -z $BASE_DIR ]; then
   #Build the packages
   docker run --privileged --name ${JOB_NAME} -e "BUILD_PUBLISH=${BUILD_PUBLISH}" -e "DISTRIBUTION=${DISTRIBUTION}" -t -v ${BASE_DIR}/${JOB_NAME}/collectd:/opt/collectd -v ${BASE_DIR}/${JOB_NAME}/collectd-build-ubuntu/build-collectd:/opt/collectd-build -v ${BASE_DIR}/${JOB_NAME}/workspace:/opt/workspace -v ${BASE_DIR}/${JOB_NAME}/$(basename $tempfolder):/opt/result -v ${BASE_DIR}/${JOB_NAME}/pbuilder:/var/cache/pbuilder quay.io/signalfuse/collectd-build-ubuntu /opt/collectd-build/sfx_scripts/cmdseq
 
+  S3_BUCKET="s3://public-downloads--signalfuse-com/debs/collectd"
   if ! [ -z $BUILD_PUBLISH ] && [ $BUILD_PUBLISH = True ]; then
-        OUTPUT=$tempfolder      
-        # Upload the packages to Amazon S3 bucket
-        aws s3 rm --recursive s3://collectd-builds-ubuntu/collectd/${DISTRIBUTION}
-        aws s3 cp --recursive $OUTPUT s3://collectd-builds-ubuntu/collectd/${DISTRIBUTION}
+        OUTPUT=$tempfolder
+
+        # Create unsigned PPA on the Amazon s3 bucket
+        (
+        cd $OUTPUT
+        mkdir -p test/debs
+        cp -rf pdebuild/* test/debs/
+        cd test
+        dpkg-scanpackages debs /dev/null > Packages
+        aws s3 rm --recursive $S3_BUCKET/$DISTRIBUTION/test/
+        aws s3 cp --recursive . $S3_BUCKET/$DISTRIBUTION/test
+        )
+        # Upload the packages and PPA to Amazon S3 bucket
+        aws s3 rm --recursive $S3_BUCKET/${DISTRIBUTION}/debuild
+        aws s3 rm --recursive $S3_BUCKET/${DISTRIBUTION}/pdebuild 
+        aws s3 rm --recursive $S3_BUCKET/${DISTRIBUTION}/test
+        aws s3 cp --recursive $OUTPUT $S3_BUCKET/${DISTRIBUTION}
   fi
   exit 0;
 fi
