@@ -54,3 +54,10 @@ cp /var/cache/pbuilder/${DISTRIBUTION}-amd64/result/* /opt/result/pdebuild/
 eval $DELETE_PUBUILDER_CACHE_FOLDER
 cd ..
 rm -rf /opt/result/debuild/collectd
+
+# Create unsigned PPA on the Amazon s3 bucket
+cd /opt/result/
+mkdir -p test/debs
+cp -rf pdebuild/* test/debs/
+cd test
+dpkg-scanpackages debs /dev/null > Packages
