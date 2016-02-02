@@ -10,9 +10,8 @@ check_for_command(){
  set -e
 }
 
-TEST_PPA="signalfx/collectd-plugin-test"
 BETA_PPA="signalfx/collectd-plugin-beta"
 RELEASE_PPA="signalfx/collectd-plugin-release"
 OS_ARRAY=("precise" "trusty" "vivid")
-
+DEBIAN_OS_ARRAY=("wheezy" "jessie")
 

@@ -2,7 +2,7 @@
 set -xe
 
 rm -rf /opt/result/*
-OS_ARRAY=("precise" "trusty" "vivid")
+OS_ARRAY=("wheezy" "jessie" "precise" "trusty" "vivid")
 for DISTRIBUTION in ${OS_ARRAY[@]}
 do
   echo "==================================== Building package for $DISTRIBUTION  =============================================="

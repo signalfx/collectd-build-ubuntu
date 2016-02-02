@@ -4,11 +4,11 @@
 # ========================================================================================
 # NOTE
 
-# This script downloads from aws s3 bucket, the packages you have uploaded from the jenkins job
-# and sign them. It uploads the source package to TEST_PPA on launchpad from where you can 
+# This script downloads from aws s3 bucket, the signalfx collectd plugin packages you have uploaded from the jenkins job
+# and sign them. It uploads the source package to BETA_PPA on launchpad from where you can 
 # install and check if everything is working fine and as expected.
 
-# USAGE: ./sign_and_upload.sh KEYID
+# USAGE: ./sign_and_upload_to_beta.sh KEYID
 
 # For this script,
 # you are expected to have the key imported on to your system and supply the key-ID.
@@ -31,20 +31,12 @@
 # proceed further only if there are no errors.
 # ========================================================================================
 
-set -e
+set -ex
 
-check_for_command(){
- set +e
- which $1 > /dev/null
- if [ $? -ne 0 ]; then
-   printf "Unable to find %s. Please install or check your PATH\n" "$1"
-   exit 1;
- fi
- set -e
-}
+. environ.sh
 
 if [ $# -eq 0 ]; then
-  printf "Usage: ./sign_and_upload.sh KEYID\n" 1>&2
+  printf "Usage: ./sign_and_upload_to_beta.sh KEYID\n" 1>&2
   exit 2;
 fi
 
@@ -53,15 +45,13 @@ check_for_command aws
 check_for_command debsign
 
 KEYID=$1
-TEST_PPA="ppa:signalfx/collectd-test"
-OS_ARRAY=("precise" "trusty" "vivid")
-DEBIAN_OS_ARRAY=("wheezy" "jessie")
 
 rm -rf /tmp/collectd-ppa-uploads/
 mkdir /tmp/collectd-ppa-uploads/
 cd /tmp/collectd-ppa-uploads/
+S3_BUCKET="s3://public-downloads--signalfuse-com/debs/signalfx-collectd-plugin"
 echo  "Downloading files from S3 Bucket, It may take some time..."
-aws s3 cp --recursive s3://collectd-builds-ubuntu/collectd/ .
+aws s3 cp --recursive $S3_BUCKET/ .
 
 for DISTRIBUTION in ${OS_ARRAY[@]}
 do
@@ -69,24 +59,23 @@ do
         then
                 cd /tmp/collectd-ppa-uploads/$DISTRIBUTION/debuild/
 		debsign -k$KEYID *.changes
-                dput -f $TEST_PPA *.changes
+                dput -f ppa:$BETA_PPA *.changes
         fi
 done
 
 for DISTRIBUTION in ${DEBIAN_OS_ARRAY[@]}
 do
-  S3_BUCKET="s3://public-downloads--signalfuse-com/debs/collectd"
-  DIR="/tmp/collectd-ppa-uploads/$DISTRIBUTION/pdebuild/"
-  if [ "$(ls -A $DIR)" ]; then
-    cd $DIR/..
-    rm -rf debuild
-    mv pdebuild debs
-    dpkg-scanpackages debs /dev/null > Packages
-    gzip -k Packages
-    apt-ftparchive release . > Release
-    gpg --default-key $KEYID -abs -o Release.gpg Release
-    aws s3 rm --recursive $S3_BUCKET/$DISTRIBUTION/test/
-    aws s3 cp --recursive . $S3_BUCKET/$DISTRIBUTION/test
-  fi
+	DIR="/tmp/collectd-ppa-uploads/$DISTRIBUTION/debian/"
+	if [ "$(ls -A $DIR)" ]; then
+	    cd $DIR/..
+	    rm -rf debuild
+	    mv debian debs
+	    dpkg-scanpackages debs /dev/null > Packages
+	    gzip -k Packages
+	    apt-ftparchive release . > Release
+	    gpg --default-key $KEYID -abs -o Release.gpg Release
+	    aws s3 rm --recursive $S3_BUCKET/$DISTRIBUTION/beta/
+	    aws s3 cp --recursive . $S3_BUCKET/$DISTRIBUTION/beta
+	fi
 done
 rm -rf /tmp/collectd-ppa-uploads/
