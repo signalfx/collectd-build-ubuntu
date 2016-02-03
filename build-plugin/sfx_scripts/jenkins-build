@@ -1,7 +1,6 @@
 #!/bin/bash -ex
 #This script is to build the collectd-signalfx plugin in Jenkins. It need the environment variables JOB_NAME and BASE_DIR.
 
-. collectd-build-ubuntu/build-plugin/sfx_scripts/environ.sh
 
 # Remove the docker container from last interrupted run
 if [[ $(docker ps -a | grep -w "${JOB_NAME}" | grep -Ev "grep") ]]; then
@@ -17,22 +16,6 @@ if ! [ -z $JOB_NAME ] && ! [ -z $BASE_DIR ]; then
   S3_BUCKET="s3://public-downloads--signalfuse-com/debs/signalfx-collectd-plugin"
   if ! [ -z $BUILD_PUBLISH ] && [ $BUILD_PUBLISH = True ]; then
         OUTPUT=$tempfolder
-
-        (
-        ALL_OS=( "${OS_ARRAY[@]}" "${DEBIAN_OS_ARRAY[@]}" )
-        cd $OUTPUT
-        for DISTRIBUTION in ${ALL_OS[@]}
-        do
-          # Create unsigned PPA on the Amazon s3 bucket
-          (
-          cd $DISTRIBUTION
-          mkdir -p test/debs
-          cp -rf debian/* test/debs/
-          cd test
-          dpkg-scanpackages debs /dev/null > Packages
-          )
-        done
-        )
 
         # Upload the packages and PPA to Amazon S3 bucket
         aws s3 rm --recursive $S3_BUCKET/${DISTRIBUTION}/debuild

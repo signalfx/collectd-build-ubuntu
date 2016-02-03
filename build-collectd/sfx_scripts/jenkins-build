@@ -15,17 +15,6 @@ if ! [ -z $JOB_NAME ] && ! [ -z $BASE_DIR ]; then
   S3_BUCKET="s3://public-downloads--signalfuse-com/debs/collectd"
   if ! [ -z $BUILD_PUBLISH ] && [ $BUILD_PUBLISH = True ]; then
         OUTPUT=$tempfolder
-
-        # Create unsigned PPA on the Amazon s3 bucket
-        (
-        cd $OUTPUT
-        mkdir -p test/debs
-        cp -rf pdebuild/* test/debs/
-        cd test
-        dpkg-scanpackages debs /dev/null > Packages
-        aws s3 rm --recursive $S3_BUCKET/$DISTRIBUTION/test/
-        aws s3 cp --recursive . $S3_BUCKET/$DISTRIBUTION/test
-        )
         # Upload the packages and PPA to Amazon S3 bucket
         aws s3 rm --recursive $S3_BUCKET/${DISTRIBUTION}/debuild
         aws s3 rm --recursive $S3_BUCKET/${DISTRIBUTION}/pdebuild 

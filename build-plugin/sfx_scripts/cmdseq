@@ -37,4 +37,11 @@ do
   cp ../*.deb /opt/result/$DISTRIBUTION/debian/
 
   rm -rf /opt/result/$DISTRIBUTION/debuild/signalfx-collectd-plugin
+
+  # Create unsigned PPA on the Amazon s3 bucket
+  cd /opt/result/$DISTRIBUTION
+  mkdir -p test/debs
+  cp -rf debian/* test/debs/
+  cd test
+  dpkg-scanpackages debs /dev/null > Packages
 done
