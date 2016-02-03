@@ -7,9 +7,9 @@
 # the source code tar ball of the version you have provided as argument, rebuilding the source package,
 # signing the package with your secret key and then uploading the package to RELEASE_PPA.
 
-# USAGE: ./promote_beta_to_release.sh VERSION KEYID
+# USAGE: ./promote_beta_to_release.sh KEYID UBUNTU_PACKAGE_VERSION
 
-# VERSION: The version number of the package you want to promote from beta to release ppa
+# UBUNTU_PACKAGE_VERSION: The version number of the package you want to promote from beta to release ppa
 # example: 5.5.0-sfx1
 # KEYID: Id of your secret key
 
@@ -31,7 +31,7 @@
 set -e
 
 if [ $# -eq 0 ]; then
-  printf "Usage: ./promote_beta_to_release.sh VERSION KEYID\n" 1>&2
+  printf "Usage: ./promote_beta_to_release.sh KEYID UBUNTU_PACKAGE_VERSION\n" 1>&2
   exit 2;
 fi
 
@@ -47,14 +47,14 @@ sudo apt-get -y install debhelper po-debconf pkg-config iptables-dev javahelper
 
 template="http://ppa.launchpad.net/${BETA_PPA}/ubuntu/pool/main/s/signalfx-collectd-plugin/signalfx-collectd-plugin_version~distribution.tar.gz"
 
-VERSION=$1
-KEYID=$2
+KEYID=$1
+UBUNTU_PACKAGE_VERSION=$2
 
 for DISTRIBUTION in ${OS_ARRAY[@]}
 do
         mkdir $DISTRIBUTION
         cd $DISTRIBUTION
-        URL=${template//version/$VERSION}
+        URL=${template//version/$UBUNTU_PACKAGE_VERSION}
         URL=${URL//distribution/$DISTRIBUTION}
         wget $URL
         tar xvf *.tar.gz
