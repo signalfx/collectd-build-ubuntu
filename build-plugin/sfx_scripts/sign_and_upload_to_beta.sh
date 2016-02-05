@@ -68,8 +68,10 @@ do
 	DIR="/tmp/collectd-ppa-uploads/$DISTRIBUTION/debian/"
 	if [ "$(ls -A $DIR)" ]; then
 	    cd $DIR/..
-	    rm -rf debuild
-	    mv debian debs
+	    rm -rf beta
+	    mkdir -p beta/debs
+	    cp debian/* beta/debs/
+	    cd beta
 	    dpkg-scanpackages debs /dev/null > Packages
 	    gzip -k Packages
 	    apt-ftparchive release . > Release
