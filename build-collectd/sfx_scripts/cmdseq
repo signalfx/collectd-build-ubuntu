@@ -57,7 +57,8 @@ rm -rf /opt/result/debuild/collectd
 
 # Create unsigned PPA on the Amazon s3 bucket
 cd /opt/result/
-mkdir -p test/debs
-cp -rf pdebuild/* test/debs/
+mkdir -p test/debs/$VERSION_TAG
+cp -rf pdebuild/* test/debs/$VERSION_TAG/
 cd test
+cp -rf /opt/existing_packages/* debs/
 dpkg-scanpackages debs /dev/null > Packages
