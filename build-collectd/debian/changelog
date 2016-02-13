@@ -1,4 +1,4 @@
-collectd (5.5.0-sfx8~trusty) trusty; urgency=medium
+collectd (5.5.0-sfx7~trusty) trusty; urgency=medium
 
   * Log http error codes other than 200
   * plugin.c: emit log message when plugin loading succeeds
