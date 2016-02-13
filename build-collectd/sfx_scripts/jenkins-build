@@ -12,7 +12,7 @@ if ! [ -z $JOB_NAME ] && ! [ -z $BASE_DIR ]; then
   #trap "rm -rf $tempfolder $existing_packages; docker rm ${JOB_NAME}" EXIT [uncomment before pull request]
   
   # Get the existing packages from Amazon S3 bucket
-  aws s3 cp --recursive $S3_BUCKET/${DISTRIBUTION}/test/debs $(basename $existing_packages)/
+  aws s3 cp --recursive $S3_BUCKET/${DISTRIBUTION}/test/debs $existing_packages/
 
   #Build the packages
   docker run \
