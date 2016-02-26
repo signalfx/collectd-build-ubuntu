@@ -1,3 +1,7 @@
+collectd (5.5.1-sfx0~trusty) trusty; urgency=medium
+
+  * package release of 5.5.1
+
 collectd (5.5.0-sfx8~trusty) trusty; urgency=medium
 
   * Log http error codes other than 200
