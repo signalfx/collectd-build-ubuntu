@@ -12,6 +12,10 @@ if ! [ -z $JOB_NAME ] && ! [ -z $BASE_DIR ]; then
   #Build the packages
   docker run --privileged --name ${JOB_NAME} -e "BUILD_PUBLISH=${BUILD_PUBLISH}" -e "DISTRIBUTION=${DISTRIBUTION}" -t -v ${BASE_DIR}/${JOB_NAME}/collectd:/opt/collectd -v ${BASE_DIR}/${JOB_NAME}/collectd-build-ubuntu/build-collectd:/opt/collectd-build -v ${BASE_DIR}/${JOB_NAME}/workspace:/opt/workspace -v ${BASE_DIR}/${JOB_NAME}/$(basename $tempfolder):/opt/result -v ${BASE_DIR}/${JOB_NAME}/pbuilder:/var/cache/pbuilder quay.io/signalfuse/collectd-build-ubuntu /opt/collectd-build/sfx_scripts/cmdseq
 
+  # create properties file for test job jenkins will kick off
+  SCRIPT_DIR=$WORKSPACE/collectd-build-ubuntu/build-collectd/sfx_scripts
+  /bin/bash $SCRIPT_DIR/create-jenkinstest-props $SCRIPT_DIR
+
   S3_BUCKET="s3://public-downloads--signalfuse-com/debs/collectd"
   if ! [ -z $BUILD_PUBLISH ] && [ $BUILD_PUBLISH = True ]; then
         OUTPUT=$tempfolder
