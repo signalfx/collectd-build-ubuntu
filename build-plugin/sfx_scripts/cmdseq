@@ -16,7 +16,7 @@ do
 
   cp -rf /opt/signalfx-collectd-plugin/src/* ./plugins/.
   rm -f plugins/test*.py
-  cp -f /opt/signalfx-collectd-plugin/*.md ./plugins/.
+  cp -f /opt/signalfx-collectd-plugin/*.md /opt/signalfx-collectd-plugin/types.db.plugin ./plugins/.
   cp -rf /opt/collectd-plugin-build-debian/* .
 
   #dependencies
