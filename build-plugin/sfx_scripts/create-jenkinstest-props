@@ -1,0 +1,17 @@
+#!/bin/bash
+
+set -ex
+
+PLUGIN_DIR=$1
+DISTRIBUTION=$2
+
+prop_file="$WORKSPACE/test.properties"
+metadata_file=$PLUGIN_DIR/src/signalfx_metadata.py
+
+if [ -f $prop_file ]; then
+  rm -f $prop_file
+fi
+
+echo "DISTRIBUTION=${DISTRIBUTION[*]}" >> "$prop_file"
+PLUGIN_VERSION="$(grep 'VERSION = ' $metadata_file | cut -d '"' -f2)"
+echo "PLUGIN_VERSION=$PLUGIN_VERSION" >> "$prop_file"

@@ -13,11 +13,18 @@ if ! [ -z $JOB_NAME ] && ! [ -z $BASE_DIR ]; then
   #Build the packages
   docker run --privileged --name ${JOB_NAME} -t -v ${BASE_DIR}/${JOB_NAME}/signalfx-collectd-plugin:/opt/signalfx-collectd-plugin -v ${BASE_DIR}/${JOB_NAME}/collectd-build-ubuntu/build-plugin:/opt/collectd-plugin-build-debian -v ${BASE_DIR}/${JOB_NAME}/workspace:/opt/workspace -v ${BASE_DIR}/${JOB_NAME}/$(basename $tempfolder):/opt/result quay.io/signalfuse/collectd-build-ubuntu /opt/collectd-plugin-build-debian/sfx_scripts/cmdseq
 
+  ALL_OS=( "${OS_ARRAY[@]}" "${DEBIAN_OS_ARRAY[@]}" )
+
+  # create properties file for test job jenkins will kick off
+
+  SCRIPT_DIR=$WORKSPACE/collectd-build-ubuntu/build-plugin/sfx_scripts
+  PLUGIN_DIR=$WORKSPACE/signalfx-collectd-plugin
+  /bin/bash $SCRIPT_DIR/create-jenkinstest-props "$PLUGIN_DIR" "${ALL_OS[*]}"
+
   S3_BUCKET="s3://public-downloads--signalfuse-com/debs/signalfx-collectd-plugin"
   if ! [ -z $BUILD_PUBLISH ] && [ $BUILD_PUBLISH = True ]; then
         OUTPUT=$tempfolder
 
-        ALL_OS=( "${OS_ARRAY[@]}" "${DEBIAN_OS_ARRAY[@]}" )
         (
         cd $OUTPUT
         for DISTRIBUTION in ${ALL_OS[@]}
