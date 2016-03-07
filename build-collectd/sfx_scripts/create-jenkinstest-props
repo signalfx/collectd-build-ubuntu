@@ -10,4 +10,4 @@ cd "$SCRIPT_DIR"
 COLLECTD_VERSION="$(head -1 ../debian/changelog | awk -F"[-~]" 'NF>2{print $2}')"
 cd "$WORKSPACE"/collectd
 VERSION=$(grep DEFAULT_VERSION= version-gen.sh  | awk -F\" '{ print $2; }' | perl -p -e "s/git/$COLLECTD_VERSION/g;")
-echo "VERSION=$VERSION" >> "$WORKSPACE"/test.properties
+echo "COLLECTD_VERSION=$VERSION" >> "$WORKSPACE"/test.properties
