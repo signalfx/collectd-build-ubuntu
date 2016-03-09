@@ -1,3 +1,9 @@
+signalfx-collectd-plugin (0.2.7~trusty) trusty; urgency=medium
+  * rev to 0.0.14
+  * fixes bug where Utilization metrics were not sent if DPM wasn't turned on
+
+ -- Signalfx, Inc. <support+deb@signalfx.com>  Wed, 9 Mar 2016 00:17:31 +0000
+
 signalfx-collectd-plugin (0.2.6~trusty) trusty; urgency=medium
   * rev to 0.0.13
   * add Utilization metrics behind flag defaulted to true
