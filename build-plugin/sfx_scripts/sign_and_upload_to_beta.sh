@@ -35,8 +35,8 @@ set -ex
 
 . environ.sh
 
-if [ $# -eq 0 ]; then
-  printf "Usage: ./sign_and_upload_to_beta.sh KEYID\n" 1>&2
+if [ ! $# -eq 2 ]; then
+  printf "Usage: ./sign_and_upload_to_beta.sh LAUNCHPADKEYID DEBIANKEYID\n" 1>&2
   exit 2;
 fi
 
@@ -44,7 +44,8 @@ fi
 check_for_command aws
 check_for_command debsign
 
-KEYID=$1
+LAUNCHPADKEYID=$1
+DEBIANKEYID=$2
 
 rm -rf /tmp/collectd-ppa-uploads/
 mkdir /tmp/collectd-ppa-uploads/
@@ -58,7 +59,7 @@ do
         if [ -f /tmp/collectd-ppa-uploads/$DISTRIBUTION/debuild/*.dsc ]
         then
                 cd /tmp/collectd-ppa-uploads/$DISTRIBUTION/debuild/
-		debsign -k$KEYID *.changes
+		debsign -k$LAUNCHPADKEYID *.changes
                 dput -f ppa:$BETA_PPA *.changes
         fi
 done
@@ -75,7 +76,7 @@ do
 	    dpkg-scanpackages debs /dev/null > Packages
 	    gzip -k Packages
 	    apt-ftparchive release . > Release
-	    gpg --default-key $KEYID -abs -o Release.gpg Release
+	    gpg --default-key $DEBIANKEYID -abs -o Release.gpg Release
 	    aws s3 rm --recursive $S3_BUCKET/$DISTRIBUTION/beta/
 	    aws s3 cp --recursive . $S3_BUCKET/$DISTRIBUTION/beta
 	fi
