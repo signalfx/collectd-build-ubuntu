@@ -1,3 +1,12 @@
+signalfx-collectd-plugin (0.2.8~trusty) trusty; urgency=medium
+  * rev to 0.0.15
+  * fix bug with summation metrics first points being wild
+  * detect intervals for each type of utilization data and emit on
+    same schedule
+  * add AWSUniqueId if not present, and we're an AWS box
+
+ -- Signalfx, Inc. <support+deb@signalfx.com>  Wed, 15 Mar 2016 00:17:31 +0000
+
 signalfx-collectd-plugin (0.2.7~trusty) trusty; urgency=medium
   * rev to 0.0.14
   * fixes bug where Utilization metrics were not sent if DPM wasn't turned on
