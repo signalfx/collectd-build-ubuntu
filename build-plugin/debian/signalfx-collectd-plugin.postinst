@@ -27,12 +27,12 @@ fi
 
 update_if_needed() {
   POSSIBLES="/etc/collectd/managed_config/* /etc/collectd.d/managed_config/* /etc/collectd/* /etc/collectd.d/*"
-  output=`grep "signalfx-collectd-plugin" $POSSIBLES 2>/dev/null`
-  already=`echo $output | grep TypesDB`
+  output=`grep "signalfx-collectd-plugin" $POSSIBLES 2>/dev/null || true`
+  already=`echo $output | grep TypesDB || true`
   [ -n "$already" ] && return
 
   filename=`echo "$output" | awk -F: '{print $1}'`
-  if [ -f $filename ]; then
+  if [ -n "$filename" -a -f "$filename" ]; then
     echo "Updating TypesDB for SignalFx Collectd Plugin"
     mv $filename $filename.bak$$
     echo 'TypesDB "/opt/signalfx-collectd-plugin/types.db.plugin"' > $filename
