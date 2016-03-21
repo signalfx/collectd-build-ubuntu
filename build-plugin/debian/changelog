@@ -1,3 +1,9 @@
+signalfx-collectd-plugin (0.2.11~trusty) trusty; urgency=medium
+  * rev to 0.0.18
+  * refactory utilization and summation metrics and add tests
+
+ -- Signalfx, Inc. <support+deb@signalfx.com>  Mon, 21 Mar 2016 11:17:31 +0000
+
 signalfx-collectd-plugin (0.2.10~trusty) trusty; urgency=medium
   * repackage to fix post install script bug
 
