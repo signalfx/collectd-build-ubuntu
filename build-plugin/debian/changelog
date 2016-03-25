@@ -1,3 +1,9 @@
+signalfx-collectd-plugin (0.2.12~trusty) trusty; urgency=medium
+  * rev to 0.0.19
+  * add ability for multiple endpoints
+
+ -- Signalfx, Inc. <support+deb@signalfx.com>  Fri, 25 Mar 2016 11:17:31 +0000
+
 signalfx-collectd-plugin (0.2.11~trusty) trusty; urgency=medium
   * rev to 0.0.18
   * refactor utilization and summation metrics and add tests
