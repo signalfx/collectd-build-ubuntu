@@ -1,3 +1,11 @@
+signalfx-collectd-plugin (0.2.13~trusty) trusty; urgency=medium
+  * rev to 0.0.20
+  * change memory.utilization to not include cached, bufferred or slab but just
+    be used/total
+  * fix repetative logging when types.db.plugin isn't found
+
+ -- Signalfx, Inc. <support+deb@signalfx.com>  Thu, 31 Mar 2016 12:48:31 +0000
+
 signalfx-collectd-plugin (0.2.12~trusty) trusty; urgency=medium
   * rev to 0.0.19
   * add ability for multiple endpoints
