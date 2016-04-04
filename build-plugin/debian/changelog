@@ -1,3 +1,13 @@
+signalfx-collectd-plugin (0.2.14~trusty) trusty; urgency=medium
+  * rev to 0.0.21
+  * send version information as dimensions on the plugin_uptime metric
+  * work around issue where collectd segfaults on shutdown when write callback
+    is an instance method
+  * add way to turn off datapoints
+  * add dither to initial notifications
+
+ -- Signalfx, Inc. <support+deb@signalfx.com>  Mon, 04 Apr 2016 12:21:39 +0000
+
 signalfx-collectd-plugin (0.2.13~trusty) trusty; urgency=medium
   * rev to 0.0.20
   * change memory.utilization to not include cached, bufferred or slab but just
