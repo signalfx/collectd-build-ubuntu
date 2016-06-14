@@ -13,5 +13,5 @@ if [ -f $prop_file ]; then
 fi
 
 echo "DISTRIBUTION=${DISTRIBUTION[*]}" >> "$prop_file"
-PLUGIN_VERSION="$(grep 'VERSION = ' $metadata_file | cut -d '"' -f2)"
+PLUGIN_VERSION="$(grep '^VERSION = ' $metadata_file | cut -d '"' -f2)"
 echo "PLUGIN_VERSION=$PLUGIN_VERSION" >> "$prop_file"
