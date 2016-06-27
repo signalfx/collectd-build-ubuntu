@@ -52,20 +52,6 @@ if test "$ENABLE_COREFILES" == 1; then
 fi
 
 # return:
-#   0 if config is fine
-#   1 if there is a syntax error
-#   2 if there is no configuration
-check_config() {
-	if test ! -e "$CONFIGFILE"; then
-		return 2
-	fi
-	if ! $DAEMON -t -C "$CONFIGFILE"; then
-		return 1
-	fi
-	return 0
-}
-
-# return:
 #   0 if the daemon has been started
 #   1 if the daemon was already running
 #   2 if the daemon could not be started
@@ -81,13 +67,6 @@ d_start() {
 		# we get here during restart
 		log_progress_msg "disabled, no configuration ($CONFIGFILE) found"
 		return 3
-	fi
-
-	check_config
-	rc="$?"
-	if test "$rc" -ne 0; then
-		log_progress_msg "not starting, configuration error"
-		return 2
 	fi
 
 	if test "$USE_COLLECTDMON" == 1; then
@@ -164,13 +143,6 @@ case "$1" in
 		;;
 	restart|force-reload)
 		log_daemon_msg "Restarting $DESC" "$NAME"
-		check_config
-		rc="$?"
-		if test "$rc" -eq 1; then
-			log_progress_msg "not restarting, configuration error"
-			log_end_msg 1
-			exit 1
-		fi
 		d_stop
 		rc="$?"
 		case "$rc" in
