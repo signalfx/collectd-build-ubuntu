@@ -1,4 +1,4 @@
-collectd (5.5.1-sfx0~trusty) trusty; urgency=medium
+collectd (5.5.1-sfx1~trusty) trusty; urgency=medium
 
   * Removed check_config() function from init script to prevent duplicate log entries.
 
