@@ -54,7 +54,7 @@ check_for_command debsign
 
 KEYID=$1
 BETA_PPA="ppa:signalfx/collectd-beta"
-OS_ARRAY=("precise" "trusty" "vivid")
+OS_ARRAY=("precise" "trusty" "vivid" "xenial")
 DEBIAN_OS_ARRAY=("wheezy" "jessie")
 
 rm -rf /tmp/collectd-ppa-uploads/
