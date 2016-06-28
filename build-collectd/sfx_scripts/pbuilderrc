@@ -13,7 +13,7 @@ DEBIAN_SUITES=($UNSTABLE_CODENAME $TESTING_CODENAME $STABLE_CODENAME $OLDSTABLE_
     "unstable" "testing" "stable" "oldstable")
 
 # List of Ubuntu suites. Update these when needed.
-UBUNTU_SUITES=("precise" "trusty" "vivid")
+UBUNTU_SUITES=("precise" "trusty" "vivid", "xenial")
 
 # Mirrors to use. Update these to your preferred mirror.
 DEBIAN_MIRROR="ftp.us.debian.org"
