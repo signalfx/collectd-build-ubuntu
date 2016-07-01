@@ -31,31 +31,20 @@
 # proceed further only if there are no errors.
 # ========================================================================================
 
-set -e
+set -ex
 
-check_for_command(){
- set +e
- which $1 > /dev/null
- if [ $? -ne 0 ]; then
-   printf "Unable to find %s. Please install or check your PATH\n" "$1"
-   exit 1;
- fi
- set -e
-}
+. environ.sh
 
-if [ $# -eq 0 ]; then
-  printf "Usage: ./sign_and_upload_to_beta.sh KEYID\n" 1>&2
+if [ ! $# -eq 2 ]; then
+  printf "Usage: ./sign_and_upload_to_beta.sh LAUNCHPADKEYID DEBIANKEYID\n" 1>&2
   exit 2;
 fi
-
 
 check_for_command aws
 check_for_command debsign
 
-KEYID=$1
-BETA_PPA="ppa:signalfx/collectd-beta"
-OS_ARRAY=("precise" "trusty" "vivid" "xenial")
-DEBIAN_OS_ARRAY=("wheezy" "jessie")
+LAUNCHPADKEYID=$1
+DEBIANKEYID=$2
 
 rm -rf /tmp/collectd-ppa-uploads/
 mkdir /tmp/collectd-ppa-uploads/
@@ -69,8 +58,8 @@ do
         if [ -f /tmp/collectd-ppa-uploads/$DISTRIBUTION/debuild/*.dsc ]
         then
                 cd /tmp/collectd-ppa-uploads/$DISTRIBUTION/debuild/
-		debsign -k$KEYID *.changes
-                dput -f $BETA_PPA *.changes
+		debsign -k$LAUNCHPADKEYID *.changes
+                dput -f ppa:$BETA_PPA *.changes
         fi
 done
 
@@ -86,7 +75,7 @@ do
     dpkg-scanpackages debs /dev/null > Packages
     gzip -k Packages
     apt-ftparchive release . > Release
-    gpg --default-key $KEYID -abs -o Release.gpg Release
+    gpg --default-key $DEBIANKEYID -abs -o Release.gpg Release
     aws s3 rm --recursive $S3_BUCKET/$DISTRIBUTION/beta/
     aws s3 cp --recursive . $S3_BUCKET/$DISTRIBUTION/beta
   fi
