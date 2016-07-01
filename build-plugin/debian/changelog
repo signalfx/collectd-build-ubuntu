@@ -1,4 +1,10 @@
 signalfx-collectd-plugin (0.2.18~trusty) trusty; urgency=low
+  * rev to 0.0.24
+  * remove dpm metric
+
+ -- Signalfx, Inc. <support+deb@signalfx.com>  Fri, 01 Jul 2016 10:02:07 +0000
+
+signalfx-collectd-plugin (0.2.18~trusty) trusty; urgency=low
   * rev to 0.0.23
   * upgrade to latest signalfx-python
 
