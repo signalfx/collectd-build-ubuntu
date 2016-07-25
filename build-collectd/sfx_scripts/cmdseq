@@ -1,6 +1,11 @@
 #!/bin/bash
 set -xe
 
+if [ ${1+x} ]; then
+    DEBUG=$1
+    export DEBUG=$DEBUG
+fi
+
 cat /opt/collectd-build/sfx_scripts/pbuilderrc > ~/.pbuilderrc
 
 rm -rf /opt/workspace/*
