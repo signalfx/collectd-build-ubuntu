@@ -74,6 +74,10 @@ ifndef SIGNALFXBUILD
 confflags += --localstatedir=/var --sysconfdir=/etc
 endif
 
+ifdef DEBUG
+confflags += --enable-debug
+endif
+
 # These plugins do not provide any functionality under Linux.
 # MacOS only (requires IO Kit):
 confflags += --disable-apple_sensors
