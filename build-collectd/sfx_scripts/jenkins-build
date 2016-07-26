@@ -16,7 +16,7 @@ if ! [ -z $JOB_NAME ] && ! [ -z $BASE_DIR ]; then
   SCRIPT_DIR=$WORKSPACE/collectd-build-ubuntu/build-collectd/sfx_scripts
   /bin/bash $SCRIPT_DIR/create-jenkinstest-props $SCRIPT_DIR
 
-  S3_BUCKET_ROOT="s3://public-downloads--signalfuse.com"
+  S3_BUCKET_ROOT="s3://public-downloads--signalfuse-com"
 
   if [ ${DEBUG+x} ]; then
     S3_BUCKET_ROOT="s3://collectd-debug"
