@@ -2,7 +2,7 @@ signalfx-collectd-plugin (0.2.20~trusty) trusty; urgency=low
   * rev to 0.0.25
   * upgrade to latest signalfx-python (v1.0.4)
 
- -- Signalfx, Inc. <support+deb@signalfx.com>  Mon, 01 Aug 2016 10:50:00 +0000
+ -- Signalfx, Inc. <support+deb@signalfx.com>  Wed, 03 Aug 2016 10:50:00 +0000
 
 signalfx-collectd-plugin (0.2.19~trusty) trusty; urgency=low
   * rev to 0.0.24
