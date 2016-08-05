@@ -5,7 +5,7 @@ parallel (
                              node {
                                      parallel (
                                        phase1: { checkout([$class: 'GitSCM', branches: [[name: 'collectd-5.5.1-sfx']], doGenerateSubmoduleConfigurations: false, extensions: [[$class: 'RelativeTargetDirectory', relativeTargetDir: 'collectd']], submoduleCfg: [], userRemoteConfigs: [[url: 'git@github.com:signalfx/collectd.git']]]) },
-                                       pahse2: { checkout([$class: 'GitSCM', branches: [[name: 'blueocean']], doGenerateSubmoduleConfigurations: false, extensions: [], submoduleCfg: [], userRemoteConfigs: [[url: 'git@github.com:signalfx/collectd-build-ubuntu.git']]]) }
+                                       phase2: { checkout([$class: 'GitSCM', branches: [[name: 'blueocean']], doGenerateSubmoduleConfigurations: false, extensions: [], submoduleCfg: [], userRemoteConfigs: [[url: 'git@github.com:signalfx/collectd-build-ubuntu.git']]]) }
                                      )
                                      sh returnStatus: true, script: '''#!/bin/sh
                                      export BASE_DIR="/storage/disk1/jenkins/workspace"
@@ -17,7 +17,7 @@ parallel (
                              node {
                                      parallel (
                                        phase1: { checkout([$class: 'GitSCM', branches: [[name: 'collectd-5.5.1-sfx']], doGenerateSubmoduleConfigurations: false, extensions: [[$class: 'RelativeTargetDirectory', relativeTargetDir: 'collectd']], submoduleCfg: [], userRemoteConfigs: [[url: 'git@github.com:signalfx/collectd.git']]]) },
-                                       pahse2: { checkout([$class: 'GitSCM', branches: [[name: 'blueocean']], doGenerateSubmoduleConfigurations: false, extensions: [], submoduleCfg: [], userRemoteConfigs: [[url: 'git@github.com:signalfx/collectd-build-ubuntu.git']]]) }
+                                       phase2: { checkout([$class: 'GitSCM', branches: [[name: 'blueocean']], doGenerateSubmoduleConfigurations: false, extensions: [], submoduleCfg: [], userRemoteConfigs: [[url: 'git@github.com:signalfx/collectd-build-ubuntu.git']]]) }
                                      )
                                      sh returnStatus: true, script: '''#!/bin/sh
                                      export BASE_DIR="/storage/disk1/jenkins/workspace"
