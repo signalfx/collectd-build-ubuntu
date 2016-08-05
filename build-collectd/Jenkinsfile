@@ -10,7 +10,7 @@ parallel (
                                      sh returnStatus: true, script: '''#!/bin/sh
                                      export BASE_DIR="/storage/disk1/jenkins/workspace"
                                      export DISTRIBUTION="precise"
-                                     collectd-build-ubuntu/build-collectd/sfx_scripts/jenkins-build'''
+                                     pipeline_build_collectd_ubuntu/build-collectd/sfx_scripts/jenkins-build'''
                                    }
                            },
     "Build Ubuntu 1404": {
@@ -22,7 +22,7 @@ parallel (
                                      sh returnStatus: true, script: '''#!/bin/sh
                                      export BASE_DIR="/storage/disk1/jenkins/workspace"
                                      export DISTRIBUTION="trusty"
-                                     collectd-build-ubuntu/build-collectd/sfx_scripts/jenkins-build'''
+                                     pipeline_build_collectd_ubuntu/build-collectd/sfx_scripts/jenkins-build'''
                                    }
                            },
 )
