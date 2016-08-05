@@ -1,0 +1,32 @@
+#!/usr/bin/env groovy
+
+parallel (
+    "Build Ubuntu 1204": {
+                             node {
+                                     stage 'Checkout source'
+                                     parallel (
+                                       phase1: { checkout([$class: 'GitSCM', branches: [[name: 'collectd-5.5.1-sfx']], doGenerateSubmoduleConfigurations: false, extensions: [[$class: 'RelativeTargetDirectory', relativeTargetDir: 'collectd']], submoduleCfg: [], userRemoteConfigs: [[url: 'git@github.com:signalfx/collectd.git']]]) },
+                                       pahse2: { checkout([$class: 'GitSCM', branches: [[name: 'blueocean']], doGenerateSubmoduleConfigurations: false, extensions: [], submoduleCfg: [], userRemoteConfigs: [[url: 'git@github.com:signalfx/collectd-build-ubuntu.git']]]) }
+                                     )
+                                     stage 'Build collectd'
+                                     sh returnStatus: true, script: '''#!/bin/sh
+                                     export BASE_DIR="/storage/disk1/jenkins/workspace"
+                                     export DISTRIBUTION="precise"
+                                     collectd-build-ubuntu/build-collectd/sfx_scripts/jenkins-build'''
+                                   }
+                           },
+    "Build Ubuntu 1404": {
+                             node {
+                                     stage 'Checkout source'
+                                     parallel (
+                                       phase1: { checkout([$class: 'GitSCM', branches: [[name: 'collectd-5.5.1-sfx']], doGenerateSubmoduleConfigurations: false, extensions: [[$class: 'RelativeTargetDirectory', relativeTargetDir: 'collectd']], submoduleCfg: [], userRemoteConfigs: [[url: 'git@github.com:signalfx/collectd.git']]]) },
+                                       pahse2: { checkout([$class: 'GitSCM', branches: [[name: 'blueocean']], doGenerateSubmoduleConfigurations: false, extensions: [], submoduleCfg: [], userRemoteConfigs: [[url: 'git@github.com:signalfx/collectd-build-ubuntu.git']]]) }
+                                     )
+                                     stage 'Build collectd'
+                                     sh returnStatus: true, script: '''#!/bin/sh
+                                     export BASE_DIR="/storage/disk1/jenkins/workspace"
+                                     export DISTRIBUTION="trusty"
+                                     collectd-build-ubuntu/build-collectd/sfx_scripts/jenkins-build'''
+                                   }
+                           },
+)
