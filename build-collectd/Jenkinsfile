@@ -1,5 +1,6 @@
 #!/usr/bin/env groovy
 
+stage 'Build all Collectds'
 parallel (
     "Build Ubuntu 1204": {
                              node {
@@ -10,7 +11,7 @@ parallel (
                                      sh returnStatus: true, script: '''#!/bin/sh
                                      export BASE_DIR="/storage/disk1/jenkins/workspace"
                                      export DISTRIBUTION="precise"
-                                     pipeline_build_collectd_ubuntu/build-collectd/sfx_scripts/jenkins-build'''
+                                     build-collectd/sfx_scripts/jenkins-build'''
                                    }
                            },
     "Build Ubuntu 1404": {
@@ -22,7 +23,7 @@ parallel (
                                      sh returnStatus: true, script: '''#!/bin/sh
                                      export BASE_DIR="/storage/disk1/jenkins/workspace"
                                      export DISTRIBUTION="trusty"
-                                     pipeline_build_collectd_ubuntu/build-collectd/sfx_scripts/jenkins-build'''
+                                     build-collectd/sfx_scripts/jenkins-build'''
                                    }
                            },
 )
