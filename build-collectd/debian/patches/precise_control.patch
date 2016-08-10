@@ -1,10 +1,10 @@
 --- debian/control	2015-07-02 01:52:05.397048049 +0000
 +++ debian/control_12	2015-07-02 01:53:05.141048385 +0000
-@@ -48,1 +48,1 @@
+@@ -49,1 +49,1 @@
 - libupsclient-dev | libupsclient1-dev,
 +# libupsclient-dev | libupsclient1-dev,
 
-@@ -281,4 +281,3 @@
+@@ -303,4 +303,3 @@
   other applications such as monitoring solutions.
   .
   This package contains the shared library.
