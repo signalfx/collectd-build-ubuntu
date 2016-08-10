@@ -6,7 +6,7 @@ if [ ${1+x} ]; then
     export DEBUG=$DEBUG
 fi
 apt-get -y update
-apt-get install -y dh_autoreconf
+apt-get install -y dh-autoreconf
 
 cat /opt/collectd-build/sfx_scripts/pbuilderrc > ~/.pbuilderrc
 
