@@ -19,12 +19,6 @@ CPPFLAGS += -I$(CURDIR)/debian/include
 CFLAGS = $(shell dpkg-buildflags --get CFLAGS)
 CFLAGS += -Wall -Wno-error=deprecated-declarations
 
-# There is no way to tell lt_dlopen() to use the RTLD_GLOBAL flag which is
-# however required by the perl plugin (which would otherwise be unable to find
-# symbols defined in libperl when loading perl modules that require such
-# symbols). This is a workaround for this issue.
-CPPFLAGS += -DLT_LAZY_OR_NOW='RTLD_LAZY|RTLD_GLOBAL'
-
 # Upstream defaults to ${sysconfdir}/collectd.conf. Setting ${sysconfdir} to
 # /etc/collectd would be wrong though.
 ifndef SIGNALFXBUILD
@@ -68,6 +62,7 @@ confflags = --host=$(DEB_HOST_GNU_TYPE) \
 			--without-libstatgrab \
 			--without-included-ltdl \
 			--disable-static \
+			--disable-silent-rules \
 			--enable-all-plugins
 
 ifndef SIGNALFXBUILD
@@ -98,27 +93,23 @@ confflags += --disable-netapp
 # libclntsh is required for the oracle plugin.
 confflags += --disable-oracle
 
-# libcredis is required for the *redis plugins.
-confflags += --disable-redis --disable-write_redis
-
 # librouteros is required for the routeros plugin.
 confflags += --disable-routeros
 
-# libsigrok >= 0.2.0 is required for the sigrok plugin, should arrive in unstable soon
+# libsigrok >= 0.2.0 is required for the sigrok plugin
 confflags += --disable-sigrok
 
-# varnish does not currently work with varnish4
-# (c.f. https://bugs.debian.org/745902)
-# confflags += --disable-varnish
+# linux-libc-dev >= 3.13 is required for the turbostat plugin.
+confflags += --disable-turbostat
 
 # libmongoc is required for the write_mongodb plugin.
 confflags += --disable-write_mongodb
 
+# librdkafka is required for the write_kafka plugin.
+confflags += --disable-write_kafka
+
 # xmms1 is required for the xmms plugin.
 confflags += --disable-xmms
-
-# libkstat is required for the xfs_arc plugin.
-confflags += --disable-zfs-arc
 
 # These plugins are Linux-specific.
 ifneq (,$(filter kfreebsd-i386 kfreebsd-amd64, $(DEB_BUILD_ARCH)))
@@ -134,6 +125,10 @@ ifneq (,$(filter kfreebsd-i386 kfreebsd-amd64, $(DEB_BUILD_ARCH)))
 		--disable-numa \
 		--disable-sensors \
 		--disable-vserver
+	# libsigrok >= 0.2.0 is required for the sigrok plugin,
+	# only available on Linux.
+	confflags += \
+		--disable-sigrok
 endif
 
 # This plugin is FreeBSD-specific.
@@ -169,9 +164,20 @@ endif
 ifneq (,$(filter kfreebsd-i386 kfreebsd-amd64, $(DEB_BUILD_ARCH)))
 	confflags += \
 		--disable-gmond \
-		--disable-libvirt \
+		--disable-virt \
 		--disable-tokyotyrant \
 		--disable-java
+endif
+
+# This plugin is Intel-hardware specific.
+ifeq (,$(filter amd64 i386, $(DEB_BUILD_ARCH)))
+	confflags += \
+		--disable-turbostat
+endif
+
+# libatasmart isn't available on these platforms.
+ifneq (,$(filter hurd-i386 kfreebsd-i386 kfreebsd-amd64, $(DEB_BUILD_ARCH)))
+	confflags += --disable-smart
 endif
 
 # The hppa buildds currently do not keep up with Java related stuff, thus
@@ -181,14 +187,14 @@ ifneq (,$(filter hppa sparc, $(DEB_BUILD_ARCH)))
 	confflags += --disable-java
 endif
 
-config.status: configure $(DPATCH_STAMPFN)
+build: build-arch build-indep
+build-arch: build-stamp
+build-indep: build-stamp
+
+build-stamp:
 	dh_testdir
 	
-	( cd debian/patches/; for patch in *; do \
-		if test "$$patch" != "00list"; then \
-			grep "$$patch" 00list > /dev/null \
-				|| ( echo "$$patch not enabled\!"; exit 1 ); \
-		fi; done )
+	dh_autoreconf
 	
 	# This is a work-around for #474087 (broken openipmi .pc files).
 	mkdir -p debian/pkgconfig
@@ -203,19 +209,12 @@ config.status: configure $(DPATCH_STAMPFN)
 		JAVA_LDFLAGS="$(JAVA_LDFLAGS)" \
 		|| ( status=$$?; cat config.log; exit $$status )
 
-build: build-arch build-indep
-build-arch: build-stamp
-build-indep: build-stamp
-
-build-stamp: config.status
-	dh_testdir
-	
 	$(MAKE)
 	perl ./debian/bin/check_plugins.pl
 	
 	touch build-stamp
 
-clean: unpatch
+clean:
 	dh_testdir
 ifndef SIGNALFXBUILD
 	dh_testroot
@@ -229,26 +228,32 @@ endif
 	
 	rm -rf debian/pkgconfig
 	
+	dh_autoreconf_clean
 	dh_clean
 	debconf-updatepo
 
 install-indep:
 	dh_testdir
 	dh_testroot
-	dh_clean -k
+	dh_prep
 	dh_installdirs -i
 	dh_install -i
 	
 	# update include path for collectd header files
-	sed -r -i -e 's/include "(.*)"/include "collectd\/core\/\1"/' \
-		$(CURDIR)/debian/collectd-dev/usr/include/collectd/core/*
-	sed -r -i -e 's/"collectd\/core\/(liboconfig\/.*)"/"collectd\/\1"/' \
-		$(CURDIR)/debian/collectd-dev/usr/include/collectd/core/*
+	(	set -e; \
+		cd $(CURDIR)/debian/collectd-dev/usr/include/collectd/; \
+		for lib in $$(find . -type f -name '*.h'); do \
+			libname=$$(basename $$lib); \
+			fullpath=$$(echo $$lib | sed -r -e 's,^\./,collectd/,'); \
+			for dir in $$(find . -mindepth 1 -type d); do \
+				sed -r -i -e "s,(include\s+)\".*$$libname\",\1\"$$fullpath\"," $$dir/*.h; \
+			done; \
+		done )
 
 install-arch: build
 	dh_testdir
 	dh_testroot
-	dh_clean -k
+	dh_prep
 	dh_installdirs -a
 	
 	$(MAKE) install DESTDIR=$(CURDIR)/debian/tmp
