@@ -38,7 +38,8 @@ HERE
 chmod 755 version-gen.sh
 
 ./build.sh
-./configure
+pwd
+ls
 DIST=${DISTRIBUTION} ARCH=amd64 yes | debuild -us -uc -S
 rm -rf /opt/result/*
 mkdir -p /opt/result/debuild
