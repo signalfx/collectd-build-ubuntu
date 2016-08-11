@@ -54,7 +54,7 @@ else
 fi
 
 eval $DELETE_PUBUILDER_CACHE_FOLDER
-sudo DIST=${DISTRIBUTION} ARCH=amd64 pbuilder create
+sudo DIST=${DISTRIBUTION} ARCH=amd64 pbuilder create --basetgz ../
 DIST=${DISTRIBUTION} ARCH=amd64 pdebuild /opt/result/debuild/*.dsc
 mkdir -p /opt/result/pdebuild/
 cp /var/cache/pbuilder/${DISTRIBUTION}-amd64/result/* /opt/result/pdebuild/

@@ -33,7 +33,7 @@ do
   yes | debuild -us -uc -S
   cp -rf ../* /opt/result/$DISTRIBUTION/debuild/
 
-  dpkg-buildpackage -b -rfakeroot -us -uc
+  dpkg-buildpackage -us -uc
   cp ../*.deb /opt/result/$DISTRIBUTION/debian/
 
   rm -rf /opt/result/$DISTRIBUTION/debuild/signalfx-collectd-plugin
