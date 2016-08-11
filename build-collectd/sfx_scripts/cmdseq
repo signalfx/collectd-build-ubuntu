@@ -38,6 +38,7 @@ HERE
 chmod 755 version-gen.sh
 
 ./build.sh
+./configure.sh
 DIST=${DISTRIBUTION} ARCH=amd64 yes | debuild -us -uc -S
 rm -rf /opt/result/*
 mkdir -p /opt/result/debuild
@@ -54,7 +55,7 @@ else
 fi
 
 eval $DELETE_PUBUILDER_CACHE_FOLDER
-sudo DIST=${DISTRIBUTION} ARCH=amd64 pbuilder create --basetgz ../
+sudo DIST=${DISTRIBUTION} ARCH=amd64 pbuilder create
 DIST=${DISTRIBUTION} ARCH=amd64 pdebuild /opt/result/debuild/*.dsc
 mkdir -p /opt/result/pdebuild/
 cp /var/cache/pbuilder/${DISTRIBUTION}-amd64/result/* /opt/result/pdebuild/
