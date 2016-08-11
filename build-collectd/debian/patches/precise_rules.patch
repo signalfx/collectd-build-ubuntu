@@ -1,8 +1,8 @@
 --- debian/rules	2015-07-02 01:52:05.397048049 +0000
 +++ debian/rules_12	2015-07-02 01:52:54.221048324 +0000
-@@ -116,6 +116,13 @@
- # libkstat is required for the xfs_arc plugin.
- confflags += --disable-zfs-arc
+@@ -113,6 +113,13 @@
+ # xmms1 is required for the xmms plugin.
+ confflags += --disable-xmms
  
 +#signalFx ubuntu build 1204
 +confflags += \
