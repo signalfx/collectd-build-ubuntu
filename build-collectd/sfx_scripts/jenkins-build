@@ -16,21 +16,21 @@ if ! [ -z $JOB_NAME ] && ! [ -z $BASE_DIR ]; then
   SCRIPT_DIR=$WORKSPACE/collectd-build-ubuntu/build-collectd/sfx_scripts
   /bin/bash $SCRIPT_DIR/create-jenkinstest-props $SCRIPT_DIR
 
-  S3_BUCKET_ROOT="s3://public-downloads--signalfuse-com"
+  S3_BUCKET_ROOT="s3://public-downloads--signalfuse-com/debs/collectd"
 
   if [ ${DEBUG+x} ]; then
-    S3_BUCKET_ROOT="s3://collectd-debug"
+    S3_BUCKET="${S3_BUCKET_ROOT}/${DISTRIBUTION}/debug"
+  else
+    S3_BUCKET="${S3_BUCKET_ROOT}/${DISTRIBUTION}"
   fi
-
-  S3_BUCKET="${S3_BUCKET_ROOT}/debs/collectd"
 
   if ! [ -z $BUILD_PUBLISH ] && [ $BUILD_PUBLISH = True ]; then
         OUTPUT=$tempfolder
         # Upload the packages and PPA to Amazon S3 bucket
-        aws s3 rm --recursive $S3_BUCKET/${DISTRIBUTION}/debuild
-        aws s3 rm --recursive $S3_BUCKET/${DISTRIBUTION}/pdebuild 
-        aws s3 rm --recursive $S3_BUCKET/${DISTRIBUTION}/test
-        aws s3 cp --recursive $OUTPUT $S3_BUCKET/${DISTRIBUTION}
+        aws s3 rm --recursive $S3_BUCKET/debuild
+        aws s3 rm --recursive $S3_BUCKET/pdebuild
+        aws s3 rm --recursive $S3_BUCKET/test
+        aws s3 cp --recursive $OUTPUT $S3_BUCKET
   fi
   exit 0;
 fi
