@@ -79,7 +79,6 @@ confflags = --host=$(DEB_HOST_GNU_TYPE) \
 			--disable-write_riemann \
 			--disable-grpc \
 			--disable-gps \
-			--disable-cpusleep \
 			--disable-zone
 
 ifndef SIGNALFXBUILD
