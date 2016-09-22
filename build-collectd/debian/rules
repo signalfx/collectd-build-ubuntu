@@ -64,7 +64,7 @@ endif
 confflags = --host=$(DEB_HOST_GNU_TYPE) \
 			--build=$(DEB_BUILD_GNU_TYPE) --prefix=${PREFIX}\
 			--mandir=\$${prefix}/share/man \
-			--with-data-max-name-len=1024 \
+			--with-data-max-name=1024 \
 			--with-perl-bindings="INSTALLDIRS=vendor INSTALL_BASE=" \
 			--without-libstatgrab \
 			--without-included-ltdl \
