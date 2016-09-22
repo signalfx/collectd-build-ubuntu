@@ -67,20 +67,8 @@ confflags = --host=$(DEB_HOST_GNU_TYPE) \
 			--with-perl-bindings="INSTALLDIRS=vendor INSTALL_BASE=" \
 			--without-libstatgrab \
 			--without-included-ltdl \
-			--without-libgrpc++ \
-			--without-libgps \
-			--without-liblua \
-			--without-libriemann \
-			--without-libsigrok \
-			--enable-all-plugins \
 			--disable-static \
-			--disable-lua \
-			--disable-mqtt \
-			--disable-write_riemann \
-			--disable-grpc \
-			--disable-gps \
-			--disable-cpusleep \
-			--disable-zone
+			--enable-all-plugins
 
 ifndef SIGNALFXBUILD
 confflags += --localstatedir=/var --sysconfdir=/etc
