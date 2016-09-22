@@ -1,3 +1,9 @@
+signalfx-collectd-plugin (0.2.22~trusty) trusty; urgency=low
+  * rev to 0.0.27
+  * Periodically check if plugin is running on AWS
+
+ -- SignalFx, Inc. <support+deb@signalfx.com>  Thu, 22 Sep 2016 10:50:00 +0000
+
 signalfx-collectd-plugin (0.2.21~trusty) trusty; urgency=low
   * rev to 0.0.26
   * Add ability to optionally report cpu utilization on a per-core basis
