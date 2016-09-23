@@ -77,7 +77,7 @@ do
     apt-ftparchive release . > Release
     gpg --default-key $DEBIANKEYID -abs -o Release.gpg Release
     aws s3 rm --recursive $S3_BUCKET/$DISTRIBUTION/beta/
-    aws s3 cp --recursive . $S3_BUCKET/$DISTRIBUTION/beta
+    aws s3 cp --recursive . $S3_BUCKET/$DISTRIBUTION/beta --cache-control="max-age=0, no-cache"
   fi
 done
 rm -rf /tmp/collectd-ppa-uploads/

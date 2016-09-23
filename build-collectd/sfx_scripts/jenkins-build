@@ -30,7 +30,7 @@ if ! [ -z $JOB_NAME ] && ! [ -z $BASE_DIR ]; then
         aws s3 rm --recursive $S3_BUCKET/debuild
         aws s3 rm --recursive $S3_BUCKET/pdebuild
         aws s3 rm --recursive $S3_BUCKET/test
-        aws s3 cp --recursive $OUTPUT $S3_BUCKET
+        aws s3 cp --recursive $OUTPUT $S3_BUCKET --cache-control="max-age=0, no-cache"
   fi
   exit 0;
 fi

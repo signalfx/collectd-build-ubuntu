@@ -34,7 +34,7 @@ if ! [ -z $JOB_NAME ] && ! [ -z $BASE_DIR ]; then
           aws s3 rm --recursive $S3_BUCKET/${DISTRIBUTION}/debuild
           aws s3 rm --recursive $S3_BUCKET/${DISTRIBUTION}/debian
           aws s3 rm --recursive $S3_BUCKET/${DISTRIBUTION}/test
-          aws s3 cp --recursive . $S3_BUCKET/${DISTRIBUTION}
+          aws s3 cp --recursive . $S3_BUCKET/${DISTRIBUTION} --cache-control="max-age=0, no-cache"
           )
         done
         )
