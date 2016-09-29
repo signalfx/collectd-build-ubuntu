@@ -2,7 +2,7 @@ collectd (5.6.0-sfx0~trusty) trusty; urgency=medium
 
   * package release of 5.6.0
 
- -- Signalfx Support <support+deb@signalfx.com>  Mon, 19 Sep 2016 20:05:00 +0000
+ -- Signalfx Support <support+deb@signalfx.com>  Mon, 03 Oct 2016 20:05:00 +0000
 
 collectd (5.5.2-sfx0~trusty) trusty; urgency=medium
 
