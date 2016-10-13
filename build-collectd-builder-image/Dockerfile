@@ -5,6 +5,7 @@ RUN apt-get update && \
     curl http://repo.varnish-cache.org/debian/GPG-key.txt | sudo apt-key add - && \
     echo "deb http://repo.varnish-cache.org/ubuntu/ trusty varnish-4.1" >> /etc/apt/sources.list && \
     apt-get update && \
-    apt-get install -y varnish && \
+    apt-get install -y varnish \
+                       libvarnish-dev && \
     apt-get clean
 RUN apt-get update
