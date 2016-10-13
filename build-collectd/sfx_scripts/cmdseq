@@ -6,6 +6,9 @@ if [ ${1+x} ]; then
     export DEBUG=$DEBUG
 fi
 
+echo "Repositories file:"
+cat /etc/apt/sources.list
+
 cat /opt/collectd-build/sfx_scripts/pbuilderrc > ~/.pbuilderrc
 
 rm -rf /opt/workspace/*
