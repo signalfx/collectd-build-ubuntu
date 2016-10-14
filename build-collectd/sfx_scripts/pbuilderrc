@@ -56,8 +56,9 @@ mkdir -p $APTCACHE
 echo "Target : $BUILDRESULT" >>/tmp/dist
 
 if $(echo ${DEBIAN_SUITES[@]} | grep -q $DIST); then
-
-    OTHERMIRROR=""
+    
+    APTKEYRINGS=(/etc/apt/trusted.gpg)
+    OTHERMIRROR="deb http://repo.varnish-cache.org/ubuntu/ trusty varnish-4.1"
     BINDMOUNTS="/var/cache/pbuilder/$NAME/result"
     HOOKDIR="/var/cache/pbuilder/$NAME/hooks"
     EXTRAPACKAGES="apt-utils"
@@ -71,6 +72,8 @@ if $(echo ${DEBIAN_SUITES[@]} | grep -q $DIST); then
     fi
 elif $(echo ${UBUNTU_SUITES[@]} | grep -q $DIST); then
     # Ubuntu configuration
+    APTKEYRINGS=(/etc/apt/trusted.gpg)
+    OTHERMIRROR="deb http://repo.varnish-cache.org/ubuntu/ trusty varnish-4.1"
     MIRRORSITE="http://$UBUNTU_MIRROR/ubuntu/"
     COMPONENTS="main restricted universe multiverse"
     DEBOOTSTRAPOPTS=("${DEBOOTSTRAPOPTS[@]}" "--keyring=/usr/share/keyrings/ubuntu-archive-keyring.gpg")
