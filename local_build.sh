@@ -92,6 +92,30 @@ build_collectd(){
     docker rm collectd-build-ubuntu
 }
 
+build_plugin(){
+    dist="$1"
+    
+    # Make directory in packages for the distribution
+    mkdir -p $SCRIPT_DIR/local_dev_resources/packages/signalfx-collectd-plugin
+
+    docker run --privileged \
+    --name "collectd-plugin-build-ubuntu" \
+    -e "BUILD_PUBLISH=False" \
+    -e "DISTRIBUTION=$dist" \
+    -v $SCRIPT_DIR/local_dev_resources/signalfx-collectd-plugin:/opt/signalfx-collectd-plugin \
+    -v $SCRIPT_DIR/build-plugin:/opt/collectd-plugin-build-debian \
+    -v $tempfolder/workspace:/opt/workspace \
+    -v $SCRIPT_DIR/local_dev_resources/packages/signalfx-collectd-plugin:/opt/result \
+    quay.io/signalfuse/collectd-build-ubuntu /opt/collectd-plugin-build-debian/sfx_scripts/cmdseq
+
+    # List out the build artifacts
+    echo "The build artifacts have been saved to: ${SCRIPT_DIR}/local_dev_resources/packages/signalfx-collectd-plugin"
+    ls -la ${SCRIPT_DIR}/local_dev_resources/packages/signalfx-collectd-plugin
+
+    # Clean up the container
+    docker stop collectd-plugin-build-ubuntu
+    docker rm collectd-plugin-build-ubuntu
+}
 
 run(){
     # Validate input and execute commands
@@ -119,19 +143,25 @@ run(){
             fi
         fi
 
-        # # Build plugin
-        # if [ "$ARTIFACT" = "plugin" ] ; then
-        #     mkdir -p $SCRIPT_DIR/local_dev_resources/packages/signalfx-collectd-plugin
-        #     docker run -ti \
-        #     -v $SCRIPT_DIR/local_dev_resources/signalfx-collectd-plugin:/opt/signalfx-collectd-plugin \
-        #     -v $SCRIPT_DIR/build-plugin:/opt/build-plugin \
-        #     -v $SCRIPT_DIR/local_dev_resources/packages/signalfx-collectd-plugin:/opt/result \
-        #     quay.io/signalfuse/collectd-build-ubuntu /opt/build-plugin/sfx_scripts/cmdseq
-
-
-        #     echo "The build artifacts have been saved to: ${SCRIPT_DIR}/local_dev_resources/packages/signalfx-collectd-plugin"
-        #     ls -la ${SCRIPT_DIR}/local_dev_resources/packages/signalfx-collectd-plugin
-        # fi
+        # Build plugin
+        if [ "$ARTIFACT" = "plugin" ] ; then
+            # If distribution is not specified
+            if [ ! -n "$DISTRIBUTION" ] ; then
+                # iterate over all distributions
+                for x in $DISTRIBUTIONS ; do
+                    build_plugin $x
+                done
+            else
+                # Iterate over all valid distributions specified
+                for x in $DISTRIBUTION ; do
+                    if in_string "$x" "$DISTRIBUTIONS" ; then
+                        build_plugin $x
+                    else
+                        echo "Invalid distribution (${x})"
+                    fi
+                done
+            fi
+        fi
 
         # Build container
         if [ "$ARTIFACT" = "container" ] ; then

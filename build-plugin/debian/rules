@@ -6,5 +6,8 @@ override_dh_install:
 	# verify, don't build broken package
 	python plugins/signalfx_metadata.py once
 
+	# clean up compiled files
+	rm plugins/*.pyc
+
 	find plugins
 	dh_install plugins/*  opt/signalfx-collectd-plugin
