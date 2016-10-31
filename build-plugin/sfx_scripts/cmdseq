@@ -4,9 +4,6 @@ set -xe
 rm -rf /opt/result/*
 OS_ARRAY=("wheezy" "jessie" "precise" "trusty" "vivid" "xenial")
 
-if [ -n $DISTIRIBUTION ] ; then
-  OS_ARRAY=("${DISTRIBUTION}")
-fi
 
 for DISTRIBUTION in ${OS_ARRAY[@]}
 do
