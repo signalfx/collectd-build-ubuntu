@@ -1,3 +1,9 @@
+signalfx-collectd-plugin (0.2.24~trusty) trusty; urgency=low
+  * rev to 0.0.29
+  * Added python dependency six
+
+ -- SignalFx, Inc. <support+deb@signalfx.com>  Wed, 02 Nov 2016 10:50:00 +0000
+
 signalfx-collectd-plugin (0.2.23~trusty) trusty; urgency=low
   * rev to 0.0.28
   * upgrade to latest signalfx-python v1.0.7
