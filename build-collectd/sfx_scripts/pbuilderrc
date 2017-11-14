@@ -1,22 +1,23 @@
 # Codenames for Debian suites according to their alias. Update these when
 # needed.
 UNSTABLE_CODENAME="sid"
-TESTING_CODENAME="stretch"
-STABLE_CODENAME="jessie"
-OLDSTABLE_CODENAME="wheezy"
+TESTING_CODENAME="buster"
+STABLE_CODENAME="stretch"
+OLDSTABLE_CODENAME="jessie"
+
 STABLE_BACKPORTS_SUITE="$STABLE_CODENAME-backports"
 
 APTCACHEHARDLINK=no
 
 # List of Debian suites.
 DEBIAN_SUITES=($UNSTABLE_CODENAME $TESTING_CODENAME $STABLE_CODENAME $OLDSTABLE_CODENAME
-    "unstable" "testing" "stable" "oldstable")
+    "wheezy" "unstable" "testing" "stable" "oldstable")
 
 # List of Ubuntu suites. Update these when needed.
 UBUNTU_SUITES=("precise" "trusty" "vivid" "xenial")
 
 # Mirrors to use. Update these to your preferred mirror.
-DEBIAN_MIRROR="ftp.us.debian.org"
+DEBIAN_MIRROR="mirrors.kernel.org"
 UBUNTU_MIRROR="mirrors.kernel.org"
 
 # Optionally use the changelog of a package to determine the suite to use if
@@ -56,25 +57,25 @@ mkdir -p $APTCACHE
 echo "Target : $BUILDRESULT" >>/tmp/dist
 
 if $(echo ${DEBIAN_SUITES[@]} | grep -q $DIST); then
-    
-    APTKEYRINGS=(/etc/apt/trusted.gpg)
-    OTHERMIRROR="deb http://repo.varnish-cache.org/ubuntu/ trusty varnish-4.1"
+    if [ "${DIST}" != "stretch" ]; then
+        APTKEYRINGS=(/etc/apt/trusted.gpg)
+        OTHERMIRROR="deb https://packagecloud.io/varnishcache/varnish41/ubuntu/ xenial main"
+    fi
     BINDMOUNTS="/var/cache/pbuilder/$NAME/result"
     HOOKDIR="/var/cache/pbuilder/$NAME/hooks"
     EXTRAPACKAGES="apt-utils"
     # Debian configuration
-    MIRRORSITE="http://$DEBIAN_MIRROR/debian/"
+    MIRRORSITE="https://$DEBIAN_MIRROR/debian/"
     COMPONENTS="main contrib non-free"
     DEBOOTSTRAPOPTS=("${DEBOOTSTRAPOPTS[@]}" "--keyring=/usr/share/keyrings/debian-archive-keyring.gpg")
     if $(echo "$STABLE_CODENAME stable" | grep -q $DIST); then
-        EXTRAPACKAGES="$EXTRAPACKAGES"
         OTHERMIRROR="$OTHERMIRROR | deb http://ftp.us.debian.org/debian $STABLE_BACKPORTS_SUITE $COMPONENTS"
     fi
 elif $(echo ${UBUNTU_SUITES[@]} | grep -q $DIST); then
     # Ubuntu configuration
     APTKEYRINGS=(/etc/apt/trusted.gpg)
-    OTHERMIRROR="deb http://repo.varnish-cache.org/ubuntu/ trusty varnish-4.1"
-    MIRRORSITE="http://$UBUNTU_MIRROR/ubuntu/"
+    OTHERMIRROR="deb https://packagecloud.io/varnishcache/varnish41/ubuntu/ xenial main"
+    MIRRORSITE="https://$UBUNTU_MIRROR/ubuntu/"
     COMPONENTS="main restricted universe multiverse"
     DEBOOTSTRAPOPTS=("${DEBOOTSTRAPOPTS[@]}" "--keyring=/usr/share/keyrings/ubuntu-archive-keyring.gpg")
 else
