@@ -1,7 +1,7 @@
 #! /bin/bash
 
 SCRIPT_DIR=$(cd $(dirname $0) && pwd)
-DISTRIBUTIONS="wheezy jessie precise vivid trusty xenial"
+DISTRIBUTIONS="wheezy jessie stretch precise vivid trusty xenial"
 COMMANDS="collectd plugin container"
 BUILD_PUBLISH=False
 ARTIFACT="$1"
@@ -31,6 +31,7 @@ Commands:
                         [options]
                             'wheezy'  - Wheezy debian build
                             'jessie'  - Jessie debian build
+                            'stretch' - Stretch debian build
                             'precise' - Precise ubuntu build
                             'vivid'   - Vivid ubuntu build
                             'trusty'  - Trusty ubuntu build
