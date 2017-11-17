@@ -1,9 +1,3 @@
-signalfx-collectd-plugin (0.2.27~trusty) trusty; urgency=medium
-
-  * Supporting Debian Stretch 
-
- -- SignalFx, Inc. <support+deb@signalfx.com>  Fri, 17 Nov 2017 15:52:33 +0000
-
 signalfx-collectd-plugin (0.2.26~trusty) trusty; urgency=low
   * rev to 0.0.32
   * upgrade dependency psutil to v3.3.0

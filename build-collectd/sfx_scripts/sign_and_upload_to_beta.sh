@@ -74,8 +74,10 @@ do
     cd beta
     dpkg-scanpackages debs /dev/null > Packages
     gzip -k Packages
+    xz -k Packages
     apt-ftparchive release . > Release
-    gpg --default-key $DEBIANKEYID -abs -o Release.gpg Release
+    gpg --default-key $DEBIANKEYID --digest-algo SHA256 -abs -o Release.gpg Release
+    gpg --default-key $DEBIANKEYID --digest-algo SHA256 --clearsign --output InRelease Release
     aws s3 rm --recursive $S3_BUCKET/$DISTRIBUTION/beta/
     aws s3 cp --recursive . $S3_BUCKET/$DISTRIBUTION/beta
   fi

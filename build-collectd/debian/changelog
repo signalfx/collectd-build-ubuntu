@@ -1,9 +1,3 @@
-collectd (5.7.2-sfx0~trusty2) trusty; urgency=medium
-
-  * Build changes to support Debian Stretch
-
- -- Signalfx Support <support+deb@signalfx.com>  Fri, 17 Nov 2017 15:24:06 +0000
-
 collectd (5.7.2-sfx0~trusty) trusty; urgency=medium
 
   * package release of 5.7.2
