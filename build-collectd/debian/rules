@@ -82,6 +82,8 @@ confflags = --host=$(DEB_HOST_GNU_TYPE) \
 			--disable-intel_rdt \
 			--disable-static \
 			--disable-write_riemann \
+			--disable-dpdkevents \
+			--disable-intel_pmu \
 			--disable-zone
 
 ifndef SIGNALFXBUILD

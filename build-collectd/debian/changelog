@@ -1,3 +1,9 @@
+collectd (5.8.0-sfx0~trusty) trusty; urgency=medium
+
+  * package release of 5.8.0
+
+ -- Signalfx Support <support+deb@signalfx.com>  Thu, 07 Dec 2017 00:00:00 +0000
+
 collectd (5.7.2-sfx0~trusty) trusty; urgency=medium
 
   * package release of 5.7.2
