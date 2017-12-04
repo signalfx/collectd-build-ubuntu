@@ -1,6 +1,6 @@
 --- debian/rules	2015-07-02 01:52:05.397048049 +0000
 +++ debian/rules_12	2015-07-02 01:52:54.221048324 +0000
-@@ -116,6 +116,13 @@
+@@ -116,6 +116,15 @@
  # libkstat is required for the xfs_arc plugin.
  confflags += --disable-zfs-arc
  
@@ -8,7 +8,9 @@
 +confflags += \
 +		--disable-lvm \
 +		--disable-turbostat \
-+		--disable-write_kafka
++		--disable-write_kafka \
++		--disable-ovs_events \
++		--disable-ovs_stats
 +
 +
  # These plugins are Linux-specific.

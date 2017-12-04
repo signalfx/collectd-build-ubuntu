@@ -75,7 +75,7 @@ build_collectd(){
 
     # Start the container
     docker run --rm --privileged \
-    --name "collectd-build-ubuntu" \
+    --name "collectd-build-ubuntu-$dist" \
     -e "BUILD_PUBLISH=False" \
     -e "DISTRIBUTION=$dist" \
     -v $SCRIPT_DIR/local_dev_resources/collectd:/opt/collectd \
