@@ -1,4 +1,5 @@
 #! /bin/bash
+set -e
 
 SCRIPT_DIR=$(cd $(dirname $0) && pwd)
 DISTRIBUTIONS="wheezy jessie stretch precise vivid trusty xenial"
@@ -73,7 +74,7 @@ build_collectd(){
     mkdir -p $SCRIPT_DIR/local_dev_resources/packages/collectd/$dist
 
     # Start the container
-    docker run --privileged \
+    docker run --rm --privileged \
     --name "collectd-build-ubuntu" \
     -e "BUILD_PUBLISH=False" \
     -e "DISTRIBUTION=$dist" \
@@ -87,10 +88,6 @@ build_collectd(){
     # List out the build artifacts
     echo "The build artifacts have been saved to: ${SCRIPT_DIR}/local_dev_resources/packages/collectd/${dist}/test/debs"
     ls -la ${SCRIPT_DIR}/local_dev_resources/packages/collectd/$dist/test/debs
-
-    # Clean up the container
-    docker stop collectd-build-ubuntu
-    docker rm collectd-build-ubuntu
 }
 
 build_plugin(){
@@ -99,7 +96,7 @@ build_plugin(){
     # Make directory in packages for the distribution
     mkdir -p $SCRIPT_DIR/local_dev_resources/packages/signalfx-collectd-plugin
 
-    docker run --privileged \
+    docker run --rm --privileged \
     --name "collectd-plugin-build-ubuntu" \
     -e "BUILD_PUBLISH=False" \
     -e "DISTRIBUTION=$dist" \
@@ -112,10 +109,6 @@ build_plugin(){
     # List out the build artifacts
     echo "The build artifacts have been saved to: ${SCRIPT_DIR}/local_dev_resources/packages/signalfx-collectd-plugin"
     ls -la ${SCRIPT_DIR}/local_dev_resources/packages/signalfx-collectd-plugin
-
-    # Clean up the container
-    docker stop collectd-plugin-build-ubuntu
-    docker rm collectd-plugin-build-ubuntu
 }
 
 run(){
