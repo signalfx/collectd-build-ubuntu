@@ -12,6 +12,6 @@ check_for_command(){
 
 BETA_PPA="signalfx/collectd-beta"
 RELEASE_PPA="signalfx/collectd-release"
-OS_ARRAY=("precise" "trusty" "vivid" "xenial")
+OS_ARRAY=("precise" "trusty" "xenial")
 DEBIAN_OS_ARRAY=("wheezy" "jessie" "stretch")
 
