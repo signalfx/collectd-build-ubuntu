@@ -23,8 +23,10 @@ cp -rf /opt/collectd/* .
 sed -i 's/trusty/'${DISTRIBUTION}'/g' debian/changelog
 
 if [ "$DISTRIBUTION" = "precise" ] || [ "$DISTRIBUTION" = "wheezy" ]; then
-patch -p0 < debian/patches/precise_control.patch
-patch -p0 < debian/patches/precise_rules.patch
+    patch -p0 < debian/patches/precise_control.patch
+    patch -p0 < debian/patches/precise_rules.patch
+elif [ "$DISTRIBUTION" = "bionic" ]; then
+    patch -p0 < debian/patches/bionic_rules.patch
 fi
 
 #patch version-gen.sh
@@ -55,7 +57,11 @@ else
 fi
 
 eval $DELETE_PUBUILDER_CACHE_FOLDER
-sudo DIST=${DISTRIBUTION} ARCH=amd64 pbuilder create
+if [ "${DISTRIBUTION}" = "bionic" ]; then
+    sudo DIST=${DISTRIBUTION} ARCH=amd64 pbuilder create --extrapackages apt-transport-https --debootstrapopts --include=gnupg,ca-certificates
+else
+    sudo DIST=${DISTRIBUTION} ARCH=amd64 pbuilder create
+fi
 DIST=${DISTRIBUTION} ARCH=amd64 pdebuild /opt/result/debuild/*.dsc
 mkdir -p /opt/result/pdebuild/
 cp /var/cache/pbuilder/${DISTRIBUTION}-amd64/result/* /opt/result/pdebuild/
