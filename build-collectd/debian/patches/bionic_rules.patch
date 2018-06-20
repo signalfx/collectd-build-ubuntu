@@ -1,0 +1,11 @@
+--- debian/rules	2018-06-19 15:10:40.000000000 -0400
++++ debian/rules.new	2018-06-19 15:10:49.000000000 -0400
+@@ -17,7 +17,7 @@
+ CPPFLAGS = $(shell dpkg-buildflags --get CPPFLAGS)
+ CPPFLAGS += -I$(CURDIR)/debian/include
+ CFLAGS = $(shell dpkg-buildflags --get CFLAGS)
+-CFLAGS += -Wall -Wno-error=deprecated-declarations
++CFLAGS += -Wall -Wno-error=deprecated-declarations -Wno-error=format-truncation -Wno-cpp
+ 
+ # There is no way to tell lt_dlopen() to use the RTLD_GLOBAL flag which is
+ # however required by the perl plugin (which would otherwise be unable to find

@@ -14,7 +14,7 @@ DEBIAN_SUITES=($UNSTABLE_CODENAME $TESTING_CODENAME $STABLE_CODENAME $OLDSTABLE_
     "wheezy" "unstable" "testing" "stable" "oldstable")
 
 # List of Ubuntu suites. Update these when needed.
-UBUNTU_SUITES=("precise" "trusty" "vivid" "xenial")
+UBUNTU_SUITES=("precise" "trusty" "vivid" "xenial" "bionic")
 
 # Mirrors to use. Update these to your preferred mirror.
 DEBIAN_MIRROR="mirrors.kernel.org"
@@ -75,7 +75,12 @@ elif $(echo ${UBUNTU_SUITES[@]} | grep -q $DIST); then
     # Ubuntu configuration
     APTKEYRINGS=(/etc/apt/trusted.gpg)
     OTHERMIRROR="deb https://packagecloud.io/varnishcache/varnish41/ubuntu/ xenial main"
-    MIRRORSITE="https://$UBUNTU_MIRROR/ubuntu/"
+    if [ "${DIST}" = "bionic" ]; then
+        # workaround for https://bugs.launchpad.net/ubuntu/+source/debootstrap/+bug/1772556
+        MIRRORSITE="http://$UBUNTU_MIRROR/ubuntu/"
+    else
+        MIRRORSITE="https://$UBUNTU_MIRROR/ubuntu/"
+    fi
     COMPONENTS="main restricted universe multiverse"
     DEBOOTSTRAPOPTS=("${DEBOOTSTRAPOPTS[@]}" "--keyring=/usr/share/keyrings/ubuntu-archive-keyring.gpg")
 else

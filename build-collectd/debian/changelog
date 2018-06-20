@@ -1,3 +1,9 @@
+collectd (5.8.0-sfx1~trusty) trusty; urgency=medium
+
+  * Added build support for Ubuntu 18.04
+
+ -- Signalfx Support <support+deb@signalfx.com>  Fri, 15 Jun 2018 00:00:00 +0000
+
 collectd (5.8.0-sfx0~trusty) trusty; urgency=medium
 
   * package release of 5.8.0

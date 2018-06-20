@@ -2,7 +2,7 @@
 set -e
 
 SCRIPT_DIR=$(cd $(dirname $0) && pwd)
-DISTRIBUTIONS="wheezy jessie stretch precise vivid trusty xenial"
+DISTRIBUTIONS="wheezy jessie stretch precise vivid trusty xenial bionic"
 COMMANDS="collectd plugin container"
 BUILD_PUBLISH=False
 ARTIFACT="$1"
@@ -37,6 +37,7 @@ Commands:
                             'vivid'   - Vivid ubuntu build
                             'trusty'  - Trusty ubuntu build
                             'xenial'  - Xenial ubuntu build
+                            'bionic'  - Bionic ubuntu build
                             No Option - Build for all platforms
             plugin    - (Not ready)   
                         build the signalfx collectd metadata plugin
