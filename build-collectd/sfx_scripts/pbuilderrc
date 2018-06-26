@@ -14,7 +14,7 @@ DEBIAN_SUITES=($UNSTABLE_CODENAME $TESTING_CODENAME $STABLE_CODENAME $OLDSTABLE_
     "wheezy" "unstable" "testing" "stable" "oldstable")
 
 # List of Ubuntu suites. Update these when needed.
-UBUNTU_SUITES=("precise" "trusty" "vivid" "xenial" "bionic")
+UBUNTU_SUITES=("precise" "trusty" "xenial" "bionic")
 
 # Mirrors to use. Update these to your preferred mirror.
 DEBIAN_MIRROR="mirrors.kernel.org"

@@ -2,7 +2,7 @@
 set -xe
 
 rm -rf /opt/result/*
-OS_ARRAY=("wheezy" "jessie" "stretch" "precise" "trusty" "vivid" "xenial" "bionic")
+OS_ARRAY=("wheezy" "jessie" "stretch" "precise" "trusty" "xenial" "bionic")
 
 
 for DISTRIBUTION in ${OS_ARRAY[@]}
