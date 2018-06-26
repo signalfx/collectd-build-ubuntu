@@ -86,7 +86,6 @@ Commands:
                             'wheezy'  - Wheezy debian build
                             'jessie'  - Jessie debian build
                             'precise' - Precise ubuntu build
-                            'vivid'   - Vivid ubuntu build
                             'trusty'  - Trusty ubuntu build
                             'xenial'  - Xenial ubuntu build
                             No Option - Build for all platforms
