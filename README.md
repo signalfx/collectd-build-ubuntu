@@ -21,9 +21,9 @@ collectd (X.X.X-sfxX~trusty) trusty; urgency=medium
 | Description | Value In Template | Example Value |
 | ----------- | ----------------- | ------------- |
 | Substitute the version | `X.X.X-sfxX` | `5.6.2-sfx0` |
-| Substitute the 3 character abreviated day | `Ddd` | `Wed` |
+| Substitute the 3 character abbreviated day | `Ddd` | `Wed` |
 | Substitute the numerical date | `DD` | `03` |
-| Substitute the 3 character abreviated month | `Mmm` | `Jul` |
+| Substitute the 3 character abbreviated month | `Mmm` | `Jul` |
 | Substitute the numerical year | `YYYY` | `2016` |
 
 **Example**
@@ -51,9 +51,9 @@ signalfx-collectd-plugin (X.X.X~trusty) trusty; urgency=low
 | Description | Value In Template | Example Value |
 | ----------- | ----------------- | ------------- |
 | Substitute the version | `X.X.X-sfxX` | `5.6.2-sfx0` |
-| Substitute the 3 character abreviated day | `Ddd` | `Wed` |
+| Substitute the 3 character abbreviated day | `Ddd` | `Wed` |
 | Substitute the numerical date | `DD` | `03` |
-| Substitute the 3 character abreviated month | `Mmm` | `Jul` |
+| Substitute the 3 character abbreviated month | `Mmm` | `Jul` |
 | Substitute the numerical year | `YYYY` | `2016` |
 
 **Example**
